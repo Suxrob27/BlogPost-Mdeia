@@ -1,0 +1,52 @@
+﻿@page
+@model Bloggie.Web.Pages.Admin.NewFolder.Blog.AddModel
+@{
+}
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<div class="bg-secondary">
+    <h1>Add Blog Post</h1>
+</div>
+<div class="mx-auto p-2 text-center">
+
+
+    <form method="post" asp-page="/admin/blog/add">
+        <div class="form-floating mb-3">
+            <input asp-for="blogModel.Heading" type="text" class="form-control" id="exampleInputEmail1">
+            <label asp-for="blogModel.Heading" class="form-label">Heading</label>
+
+        </div>
+        <div class="form-floating mb-3">
+            <input asp-for="blogModel.PageTitle"  type="text" class="form-control" id="exampleInputEmail1">
+            <label asp-for="blogModel.PageTitle" class="form-label">Page Title</label>
+
+        </div>
+        <div class="form-floating mb-3">
+            <textarea asp-for="blogModel.Content" class="form-control" style="height:100px" placeholder="Some Text Here..."></textarea>
+            <label asp-for="blogModel.Content">Write a Message</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input asp-for="blogModel.ShortDescription"  type="text" class="form-control" id="exampleInputEmail1">
+            <label asp-for="blogModel.ShortDescription" class="form-label">Page Title</label>
+        </div>
+
+        <div class="form-floating mb-3">
+            <input asp-for="blogModel.FeaturedImageUrl" type="text" class="form-control" id="exampleInputEmail1">
+            <label asp-for="blogModel.FeaturedImageUrl" class="form-label">Featured Image Url</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input asp-for="blogModel.FeaturedImageUrl" type="text" class="form-control" id="exampleInputEmail1">
+            <label asp-for="blogModel.FeaturedImageUrl" class="form-label">Url Handle</label>
+        </div>
+        
+        <div class="col-12">
+            <div class="form-check text-start">
+                <input asp-for="blogModel.Visible" class="form-check-input" type="checkbox" id="gridCheck">
+                <label asp-for="blogModel.Visible" class="form-check-label" for="gridCheck">
+                    Is Visible
+                </label>
+            </div>
+
+        <button type="submit" class="btn btn-primary m-3">Submit</button>
+    </form>
+</div>

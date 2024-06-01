@@ -14,7 +14,7 @@ namespace DB.Context
         {
                 
         }
-        public DbSet<BlogDB> blogDB { get; set; }
+        public DbSet<BlogModel> blogModel { get; set; }
         public DbSet<Tag>  tags { get; set; }    
     }
 }

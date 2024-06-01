@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bloggie.Web", "Bloggie.Web\Bloggie.Web.csproj", "{00C76109-B92B-4606-823B-010B7734CB69}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bloggie.Web", "Bloggie.Web\Bloggie.Web.csproj", "{00C76109-B92B-4606-823B-010B7734CB69}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DB", "DB\DB.csproj", "{F04A2B9E-CA55-479F-95FE-350047106357}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DB", "DB\DB.csproj", "{F04A2B9E-CA55-479F-95FE-350047106357}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
