@@ -1,4 +1,5 @@
 using DB.Context;
+using DB.IRepository;
 using DB.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -8,14 +9,16 @@ namespace Bloggie.Web.Pages.Admin.NewFolder.Blog
     public class AddModel : PageModel
      {
         private readonly BlogDB _db;
+        private readonly IBlogRepository blogRepository;
 
         [BindProperty]
         public BlogModel blogModel { get; set; }
-        public AddModel(BlogDB db)
+        public AddModel(BlogDB db, IBlogRepository blogRepository)
         {
             _db = db;
+            this.blogRepository = blogRepository;
         }
-        [HttpGet]
+
         public void OnGet()
         {
            
@@ -25,8 +28,7 @@ namespace Bloggie.Web.Pages.Admin.NewFolder.Blog
         {
             if (ModelState.IsValid && blogModel != null)
             {
-               await _db.blogModel.AddAsync(blogModel);
-                await _db.SaveChangesAsync();
+              await blogRepository.AddAsync(blogModel);
                return RedirectToPage("/admin/blog/BlogPostList");
             }
             else

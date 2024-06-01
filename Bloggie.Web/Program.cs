@@ -1,4 +1,6 @@
 using DB.Context;
+using DB.IRepository;
+using DB.Repository;
 using Microsoft.EntityFrameworkCore;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
@@ -8,6 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddDbContext<BlogDB>(opt =>
 opt.UseSqlServer(builder.Configuration.GetConnectionString("Defaoult"), b => b.MigrationsAssembly("DB"))) ;
+builder.Services.AddScoped<IBlogRepository,BlogRepository>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
