@@ -1,3 +1,4 @@
+using Bloggie.Web.Controllers;
 using DB.Context;
 using DB.IRepository;
 using DB.Repository;
@@ -8,11 +9,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddControllers();
+builder.Services.AddScoped<IBlogRepository, BlogRepository>();
+builder.Services.AddScoped<IImageRepostiory, ImageRepository>();
 builder.Services.AddDbContext<BlogDB>(opt =>
-opt.UseSqlServer(builder.Configuration.GetConnectionString("Defaoult"), b => b.MigrationsAssembly("DB"))) ;
-builder.Services.AddScoped<IBlogRepository,BlogRepository>();
+opt.UseSqlServer(builder.Configuration.GetConnectionString("Defaoult"), b => b.MigrationsAssembly("DB")));
 var app = builder.Build();
-
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
@@ -29,5 +31,5 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapRazorPages();
-
+app.MapControllers();
 app.Run();

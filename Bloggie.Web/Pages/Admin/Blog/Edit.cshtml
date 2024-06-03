@@ -8,6 +8,7 @@
 <div class="bg-secondary">
     <h1>Edit Blog Post</h1>
 </div>
+  <partial name="_NotificationPartial">
 <div class="mx-auto p-2 text-center">
 
 
@@ -27,10 +28,9 @@
             <label asp-for="blogModel.PageTitle" class="form-label">Page Title</label>
 
         </div>
-        <div class="form-floating mb-3">
-            <textarea asp-for="blogModel.Content" class="form-control" style="height:100px" placeholder="Some Text Here..."></textarea>
-            <label asp-for="blogModel.Content">Write a Message</label>
-        </div>
+            <div class="form-floating mb-3">
+                <textarea asp-for="blogModel.Content" class="form-control" style="height:100px" id="content"></textarea>
+            </div>
         <div class="form-floating mb-3">
             <input asp-for="blogModel.ShortDescription"  type="text" class="form-control" id="exampleInputEmail1">
             <label asp-for="blogModel.ShortDescription" class="form-label">Page Title</label>
@@ -55,7 +55,15 @@
             <div class="justify-content-between">
 
             </div>
-            <button type="submit" class="btn btn-primary m-3" asp-page-handler="EditAsync">Edit The Blog Post</button>
+            <button type="submit" class="btn btn-primary m-3" asp-page-handler="Edit">Edit The Blog Post</button>
             <button type="submit" class="btn btn-danger m-3" asp-page-handler="Delete">Delete</button>
     </form>
 </div>
+
+
+    @section Scripts
+    {
+        <script>
+            var editor = new FroalaEditor("#content");
+        </script>
+    }

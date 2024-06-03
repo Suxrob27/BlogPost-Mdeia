@@ -1,9 +1,12 @@
 using DB.Context;
 using DB.IRepository;
 using DB.Model;
+using DB.Model.Notification;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Bloggie.Web.Pages.Admin.Blog
 {
@@ -19,7 +22,12 @@ namespace Bloggie.Web.Pages.Admin.Blog
         }
         public async Task OnGet()
         {
-           await _blogRepository.GetAllPosts();
+            var notificationJson = (string)TempData["Notification"];
+            if (notificationJson != null)
+            {
+                ViewData["Notification"] =  JsonSerializer.Deserialize<NotificationModel>(notificationJson);
+            }
+            blogList = (await _blogRepository.GetAllPosts())?.ToList(); ;
         }
     }
 }

@@ -22,8 +22,7 @@
 
         </div>
         <div class="form-floating mb-3">
-            <textarea asp-for="blogModel.Content" class="form-control" style="height:100px" placeholder="Some Text Here..."></textarea>
-            <label asp-for="blogModel.Content">Write a Message</label>
+            <textarea asp-for="blogModel.Content" class="form-control" style="height:100px"  id="content"></textarea>
         </div>
         <div class="form-floating mb-3">
             <input asp-for="blogModel.ShortDescription"  type="text" class="form-control" id="exampleInputEmail1">
@@ -31,12 +30,18 @@
         </div>
 
         <div class="form-floating mb-3">
-            <input asp-for="blogModel.FeaturedImageUrl" type="text" class="form-control" id="exampleInputEmail1">
-            <label asp-for="blogModel.FeaturedImageUrl" class="form-label">Featured Image Url</label>
+            <input asp-for="FeaturedFile" type="text" id="featuredImageUpload" class="form-control" type="file">
+            <img src="" id="featuredImageDisplay" style="display:none; width:300px;" />
+
+        </div>
+
+        <div class="form-floating mb-3">
+            <input asp-for="blogModel.FeaturedImageUrl" type="text" class="form-control" >
+            <label asp-for="blogModel.FeaturedImageUrl" id="featuredImageUrl" class="form-label">Featured Image Url</label>
         </div>
         <div class="form-floating mb-3">
-            <input asp-for="blogModel.FeaturedImageUrl" type="text" class="form-control" id="exampleInputEmail1">
-            <label asp-for="blogModel.FeaturedImageUrl" class="form-label">Url Handle</label>
+            <input asp-for="blogModel.UrlHandle" type="text" class="form-control" id="exampleInputEmail1">
+            <label asp-for="blogModel.UrlHandle" i class="form-label">Url Handle</label>
         </div>
         
         <div class="col-12">
@@ -50,3 +55,41 @@
         <button type="submit" class="btn btn-primary m-3">Submit</button>
     </form>
 </div>
+
+ @section Scripts 
+ {
+     <script>
+        var editor = new FroalaEditor('#content', {
+            imageUploadURL: '/api/ImageAPI'
+        });
+
+
+        const featuredImageUploadElement = document.getElementById('featuredImageUpload');
+        const featuredImageUrl = document.getElementById('featuredImageUrl');
+        const featuredImageDisplay = document.getElementById('featuredImageDisplay');
+
+
+        async function uploadFeaturedImage(e) {
+            console.log(e.target.files[0]);
+
+            let data = new FormData();
+            data.append('file', e.target.files[0]);
+
+            await fetch('/api/ImageAPI', {
+                method: 'POST',
+                headers: {
+                    'Accept': '*/*',
+                },
+                body: data
+            }).then(response => response.json())
+                .then(result => {
+                    featuredImageUrl.value = result.link;
+                    featuredImageDisplay.style.display = 'block';
+                    featuredImageDisplay.src = result.link;
+                });
+        }
+
+        featuredImageUploadElement.addEventListener('change', uploadFeaturedImage);
+
+     </script>
+ }

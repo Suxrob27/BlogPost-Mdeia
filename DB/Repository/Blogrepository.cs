@@ -20,18 +20,19 @@ namespace DB.Repository
         }
         public async Task<BlogModel> AddAsync(BlogModel model)
         {
-          await db.blogModel.AddAsync(model);
-          await db.SaveChangesAsync();
-            return model;   
+            await db.blogModel.AddAsync(model);
+            await db.SaveChangesAsync();
+            return model;
         }
 
         public async Task<bool> DeleteAsync(Guid id)
         {
             var exsistingElement = await db.blogModel.FindAsync(id);
-                db.blogModel.Remove(exsistingElement);
-                return true;    
-            
-             
+            db.blogModel.Remove(exsistingElement);
+            db.SaveChanges();
+            return true;
+
+
         }
 
         public async Task<IEnumerable<BlogModel>> GetAllPosts()
@@ -44,13 +45,27 @@ namespace DB.Repository
             return await db.blogModel.FindAsync(id);
         }
 
-        public async Task<BlogModel> UpdateAsync(BlogModel model)
+        public async Task<BlogModel> UpdateAsync(BlogModel blogPost)
         {
-           var updatingModel =  await db.blogModel.FindAsync(model.Id);
-            db.blogModel.Update(updatingModel);
-            await db.SaveChangesAsync();   
-            return updatingModel;   
-           
+            var existingBlogPost = await db.blogModel.FindAsync(blogPost.Id);
+            if (existingBlogPost != null)
+            {
+                existingBlogPost.Heading = blogPost.Heading;
+                existingBlogPost.PageTitle = blogPost.PageTitle;
+                existingBlogPost.Content = blogPost.Content;
+                existingBlogPost.ShortDescription = blogPost.ShortDescription;
+                existingBlogPost.FeaturedImageUrl = blogPost.FeaturedImageUrl;
+                existingBlogPost.UrlHandle = blogPost.UrlHandle;
+                existingBlogPost.PublishedDate = blogPost.PublishedDate;
+                existingBlogPost.Author = blogPost.Author;
+                existingBlogPost.Visible = blogPost.Visible;
+
+                await db.SaveChangesAsync();
+
+                return blogPost;
+
+            }
+            return null;
         }
     }
 }
