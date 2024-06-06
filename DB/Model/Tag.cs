@@ -10,6 +10,7 @@ namespace DB.Model
     {
         public Guid Id { get; set; }
         public string Name { get; set; } = string.Empty;
-
+        public BlogModel Blog { get; set; }
+        public Guid BlogPostId { get; set; }    
     }
 }

@@ -45,6 +45,11 @@ namespace DB.Repository
             return await db.blogModel.FindAsync(id);
         }
 
+        public Task<BlogModel> GetAsync(string urlHnadler)
+        {
+            return db.blogModel.FirstOrDefaultAsync(x => x.UrlHandle == urlHnadler);
+        }
+
         public async Task<BlogModel> UpdateAsync(BlogModel blogPost)
         {
             var existingBlogPost = await db.blogModel.FindAsync(blogPost.Id);

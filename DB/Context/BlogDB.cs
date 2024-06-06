@@ -15,6 +15,11 @@ namespace DB.Context
                 
         }
         public DbSet<BlogModel> blogModel { get; set; }
-        public DbSet<Tag>  tags { get; set; }    
+        public DbSet<Tag>  tags { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<BlogModel>().HasMany(x => x.Tags).WithOne(x => x.Blog).HasForeignKey(x => x.BlogPostId);
+        }
     }
 }

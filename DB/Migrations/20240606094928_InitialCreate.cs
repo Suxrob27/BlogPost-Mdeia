@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace DB.Migrations
 {
     /// <inheritdoc />
-    public partial class NewMigration : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -24,7 +24,8 @@ namespace DB.Migrations
                     UrlHandle = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PublishedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Author = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Visible = table.Column<bool>(type: "bit", nullable: false)
+                    Visible = table.Column<bool>(type: "bit", nullable: false),
+                    tagId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -36,22 +37,34 @@ namespace DB.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    BlogPostId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_tags", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_tags_blogModel_BlogPostId",
+                        column: x => x.BlogPostId,
+                        principalTable: "blogModel",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_tags_BlogPostId",
+                table: "tags",
+                column: "BlogPostId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "blogModel");
+                name: "tags");
 
             migrationBuilder.DropTable(
-                name: "tags");
+                name: "blogModel");
         }
     }
 }

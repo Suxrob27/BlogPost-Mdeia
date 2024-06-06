@@ -8,9 +8,7 @@
     <h1>Add Blog Post</h1>
 </div>
 <div class="mx-auto p-2 text-center">
-
-
-    <form method="post" asp-page="/admin/blog/add">
+    <form method="post">
         <div class="form-floating mb-3">
             <input asp-for="blogModel.Heading" type="text" class="form-control" id="exampleInputEmail1">
             <label asp-for="blogModel.Heading" class="form-label">Heading</label>
@@ -43,7 +41,12 @@
             <input asp-for="blogModel.UrlHandle" type="text" class="form-control" id="exampleInputEmail1">
             <label asp-for="blogModel.UrlHandle" i class="form-label">Url Handle</label>
         </div>
-        
+
+        <div class="form-floating mb-3">
+            <input asp-for="Tags" type="text" class="form-control" id="exampleInputEmail1">
+            <label asp-for="Tags" i class="form-label">Tags (comma seperated)</label>
+        </div>
+
         <div class="col-12">
             <div class="form-check text-start">
                 <input asp-for="blogModel.Visible" class="form-check-input" type="checkbox" id="gridCheck">

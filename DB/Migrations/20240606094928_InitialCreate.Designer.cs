@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DB.Migrations
 {
     [DbContext(typeof(BlogDB))]
-    [Migration("20240601100454_NewMigration")]
-    partial class NewMigration
+    [Migration("20240606094928_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -64,6 +64,9 @@ namespace DB.Migrations
                     b.Property<bool>("Visible")
                         .HasColumnType("bit");
 
+                    b.Property<Guid>("tagId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
 
                     b.ToTable("blogModel");
@@ -75,13 +78,34 @@ namespace DB.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("BlogPostId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("BlogPostId");
+
                     b.ToTable("tags");
+                });
+
+            modelBuilder.Entity("DB.Model.Tag", b =>
+                {
+                    b.HasOne("DB.Model.BlogModel", "Blog")
+                        .WithMany("Tags")
+                        .HasForeignKey("BlogPostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Blog");
+                });
+
+            modelBuilder.Entity("DB.Model.BlogModel", b =>
+                {
+                    b.Navigation("Tags");
                 });
 #pragma warning restore 612, 618
         }

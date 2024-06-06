@@ -4,6 +4,7 @@ using DB.Model;
 using DB.Model.Notification;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Security.Cryptography;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -17,7 +18,10 @@ namespace Bloggie.Web.Pages.Admin.NewFolder.Blog
         [BindProperty]
         public BlogModel blogModel { get; set; }
         [BindProperty]
-        public IFormFile FeaturedFile { get; set; } 
+        public IFormFile FeaturedFile { get; set; }
+
+        [BindProperty]
+        public string Tags { get; set; }
         public AddModel(BlogDB db, IBlogRepository blogRepository)
         {
             _db = db;
@@ -34,7 +38,8 @@ namespace Bloggie.Web.Pages.Admin.NewFolder.Blog
            
             if (ModelState.IsValid && blogModel != null)
             {
-              await blogRepository.AddAsync(blogModel);
+                blogModel.Tags = new List<Tag>(Tags.Split(',').Select(x => new Tag { Name = x.Trim()}));
+                await blogRepository.AddAsync(blogModel);
                 var notification  = new NotificationModel
                 {
                     Message = "New Blog Post Was Successfully Added",
