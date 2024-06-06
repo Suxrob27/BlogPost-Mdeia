@@ -61,9 +61,6 @@ namespace DB.Migrations
                     b.Property<bool>("Visible")
                         .HasColumnType("bit");
 
-                    b.Property<Guid>("tagId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
 
                     b.ToTable("blogModel");
@@ -75,6 +72,9 @@ namespace DB.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("BlogModelId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid>("BlogPostId")
                         .HasColumnType("uniqueidentifier");
 
@@ -84,20 +84,16 @@ namespace DB.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BlogPostId");
+                    b.HasIndex("BlogModelId");
 
                     b.ToTable("tags");
                 });
 
             modelBuilder.Entity("DB.Model.Tag", b =>
                 {
-                    b.HasOne("DB.Model.BlogModel", "Blog")
+                    b.HasOne("DB.Model.BlogModel", null)
                         .WithMany("Tags")
-                        .HasForeignKey("BlogPostId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Blog");
+                        .HasForeignKey("BlogModelId");
                 });
 
             modelBuilder.Entity("DB.Model.BlogModel", b =>

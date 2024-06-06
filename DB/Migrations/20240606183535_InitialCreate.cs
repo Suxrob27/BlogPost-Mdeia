@@ -24,8 +24,7 @@ namespace DB.Migrations
                     UrlHandle = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PublishedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Author = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Visible = table.Column<bool>(type: "bit", nullable: false),
-                    tagId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    Visible = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -38,23 +37,23 @@ namespace DB.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    BlogPostId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    BlogPostId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    BlogModelId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_tags", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_tags_blogModel_BlogPostId",
-                        column: x => x.BlogPostId,
+                        name: "FK_tags_blogModel_BlogModelId",
+                        column: x => x.BlogModelId,
                         principalTable: "blogModel",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_tags_BlogPostId",
+                name: "IX_tags_BlogModelId",
                 table: "tags",
-                column: "BlogPostId");
+                column: "BlogModelId");
         }
 
         /// <inheritdoc />

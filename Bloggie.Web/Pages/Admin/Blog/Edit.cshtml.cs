@@ -4,81 +4,134 @@ using DB.Model;
 using DB.Model.Notification;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
+using System;
 using System.Text.Json;
 
 namespace Bloggie.Web.Pages.Admin.Blog
 {
     public class EditModel : PageModel
     {
+        private readonly IBlogRepository blogPostRepository;
+
         [BindProperty]
-        public BlogModel blogModel { get; set; }
-        private readonly BlogDB _dB;
-        private readonly IBlogRepository _blogRepository;
+        public BlogModel BlogPost { get; set; }
 
-        public EditModel(BlogDB dB, IBlogRepository blogRepository)
-        {
-            _dB = dB;
-            _blogRepository = blogRepository;
-        }
-        public async Task  OnGet(Guid id)
-        {
-            blogModel = await _blogRepository.GetAsync(id) ?? new BlogModel();
+        [BindProperty]
+        public IFormFile FeaturedImage { get; set; }
 
+        [BindProperty]
+        [Required]
+        public string Tags { get; set; }
+
+        public EditModel(IBlogRepository blogPostRepository)
+        {
+            this.blogPostRepository = blogPostRepository;
         }
-        [HttpPost]
+
+        public async Task OnGet(Guid id)
+        {
+            var blogPostDomainModel = await blogPostRepository.GetAsync(id);
+
+            if (blogPostDomainModel != null && blogPostDomainModel.Tags != null)
+            {
+                BlogPost = new BlogModel
+                {
+                    Id = blogPostDomainModel.Id,
+                    Heading = blogPostDomainModel.Heading,
+                    PageTitle = blogPostDomainModel.PageTitle,
+                    Content = blogPostDomainModel.Content,
+                    ShortDescription = blogPostDomainModel.ShortDescription,
+                    FeaturedImageUrl = blogPostDomainModel.FeaturedImageUrl,
+                    UrlHandle = blogPostDomainModel.UrlHandle,
+                    PublishedDate = blogPostDomainModel.PublishedDate,
+                    Author = blogPostDomainModel.Author,
+                    Visible = blogPostDomainModel.Visible
+                };
+
+                Tags = string.Join(',', blogPostDomainModel.Tags.Select(x => x.Name));
+            }
+        }
+
         public async Task<IActionResult> OnPostEdit()
         {
-            if (ModelState.IsValid && blogModel != null)
+            ValidateEditBlogPost();
+
+            if (ModelState.IsValid)
             {
-              await _blogRepository.UpdateAsync(blogModel);
-
-                ViewData["Notification"] = new NotificationModel
+                try
                 {
-                    Message = "The Post Was Successfully Edited",
-                    Type = NotificationType.Success,
-                };
+                    var blogPostDomainModel = new BlogModel
+                    {
+                        Id = BlogPost.Id,
+                        Heading = BlogPost.Heading,
+                        PageTitle = BlogPost.PageTitle,
+                        Content = BlogPost.Content,
+                        ShortDescription = BlogPost.ShortDescription,
+                        FeaturedImageUrl = BlogPost.FeaturedImageUrl,
+                        UrlHandle = BlogPost.UrlHandle,
+                        PublishedDate = BlogPost.PublishedDate,
+                        Author = BlogPost.Author,
+                        Visible = BlogPost.Visible,
+                        Tags = new List<Tag>(Tags.Split(',').Select(x => new Tag() { Name = x.Trim() }))
+                    };
 
-                return RedirectToPage("/admin/blog/edit");
-            }
-            else
-            {
 
-                ViewData["Notification"] = new NotificationModel
+                    await blogPostRepository.UpdateAsync(blogPostDomainModel);
+
+                    ViewData["Notification"] = new NotificationModel
+                    {
+                        Type = NotificationType.Success,
+                        Message = "Record updated successfully!"
+                    };
+                }
+                catch (Exception ex)
                 {
-                    Message = "Occured Some Error, Try it Again or Later",
-                    Type = NotificationType.Error,
-                };
+                    ViewData["Notification"] = new NotificationModel
+                    {
+                        Type = NotificationType.Error,
+                        Message = "Something went wrong!"
+                    };
+                }
+
                 return Page();
             }
+
+            return Page();
         }
 
         public async Task<IActionResult> OnPostDelete()
         {
-            var existingblog = await _blogRepository.GetAsync(blogModel.Id) ;
-
-               
-            if (existingblog != null)
+            var deleted = await blogPostRepository.DeleteAsync(BlogPost.Id);
+            if (deleted)
             {
-                await _blogRepository.DeleteAsync(existingblog.Id);
                 var notification = new NotificationModel
                 {
-                    Message = "The Post Was Successfully Deleted",
-                    Type = NotificationType.Info,
+                    Type = NotificationType.Success,
+                    Message = "Blog was deleted successfully!"
                 };
 
                 TempData["Notification"] = JsonSerializer.Serialize(notification);
-                return RedirectToPage("/Admin/Blog/BlogPostList");
+
+                return RedirectToPage("/Admin/Blogs/List");
             }
-            else
-            {
-                var notification = new NotificationModel
-                {
-                    Message = "Some Error Happened in Deleting. Try it Again Or Later",
-                    Type = NotificationType.Error,
-                };
 
-                TempData["Notification"] = JsonSerializer.Serialize(notification);
-                return Page();
+            return Page();
+        }
+
+
+        private void ValidateEditBlogPost()
+        {
+            if (!string.IsNullOrWhiteSpace(BlogPost.Heading))
+            {
+                // check for minimum length
+                if (BlogPost.Heading.Length < 10 || BlogPost.Heading.Length > 72)
+                {
+                    ModelState.AddModelError("BlogPost.Heading",
+                        "Heading can only be between 10 and 72 characters.");
+                }
+                // check for maximum length
             }
         }
     }

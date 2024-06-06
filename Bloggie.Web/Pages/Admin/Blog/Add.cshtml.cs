@@ -35,10 +35,10 @@ namespace Bloggie.Web.Pages.Admin.NewFolder.Blog
         [HttpPost]
         public async Task<IActionResult> OnPostAsync() 
         {
-           
-            if (ModelState.IsValid && blogModel != null)
+            blogModel.Tags = new List<Tag>(Tags.Split(',').Select(x => new Tag { Name = x.Trim() }));
+
+            if (blogModel != null)
             {
-                blogModel.Tags = new List<Tag>(Tags.Split(',').Select(x => new Tag { Name = x.Trim()}));
                 await blogRepository.AddAsync(blogModel);
                 var notification  = new NotificationModel
                 {
@@ -51,13 +51,13 @@ namespace Bloggie.Web.Pages.Admin.NewFolder.Blog
             }
             else
             {
-                var notification = new NotificationModel
+               ViewData["Notification"] = new NotificationModel
                 {
                     Message = "Some Error Happened. Try it Again or Try it Later",
                     Type = NotificationType.Error,
                 };
-
-                TempData["Notification"] = JsonSerializer.Serialize(notification);
+                
+          
                 return Page();
             }
         }
