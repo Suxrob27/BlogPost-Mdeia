@@ -42,7 +42,7 @@ namespace DB.Repository
 
         public async Task<BlogModel> GetAsync(Guid id)
         {
-            return await db.blogModel.FindAsync(id);
+            return await db.blogModel.Include(nameof(BlogModel.Tags)).FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public Task<BlogModel> GetAsync(string urlHnadler)
@@ -52,7 +52,7 @@ namespace DB.Repository
 
         public async Task<BlogModel> UpdateAsync(BlogModel blogPost)
         {
-            var existingBlogPost = await db.blogModel.FindAsync(blogPost.Id);
+            var existingBlogPost = await db.blogModel.Include(nameof(BlogModel.Tags)).FirstOrDefaultAsync(x => x.Id == blogPost.Id);
             if (existingBlogPost != null)
             {
                 existingBlogPost.Heading = blogPost.Heading;
@@ -64,6 +64,19 @@ namespace DB.Repository
                 existingBlogPost.PublishedDate = blogPost.PublishedDate;
                 existingBlogPost.Author = blogPost.Author;
                 existingBlogPost.Visible = blogPost.Visible;
+                existingBlogPost.Tags = blogPost.Tags;
+
+                if(blogPost.Tags != null && blogPost.Tags.Any())
+                {
+                    //Delete the Exisiting tags
+                    db.tags.RemoveRange(existingBlogPost.Tags);
+
+                    //Add new tags
+                    blogPost.Tags.ToList().ForEach(x => x.BlogPostId = existingBlogPost.Id);
+                    await db.tags.AddRangeAsync(blogPost.Tags);
+
+                }
+
 
                 await db.SaveChangesAsync();
 

@@ -14,41 +14,46 @@
 
     <form method="post" asp-page="/admin/blog/edit">
         <div class="form-floating mb-3">
-            <input asp-for="blogModel.Id" type="text" class="form-control" readonly>
-            <label asp-for="blogModel.Id" class="form-label">ID</label>
+            <input asp-for="BlogPost.Id" type="text" class="form-control" readonly>
+                <label asp-for="BlogPost.Id" class="form-label">ID</label>
 
         </div>
         <div class="form-floating mb-3">
-            <input asp-for="blogModel.Heading" type="text" class="form-control" id="exampleInputEmail1">
-            <label asp-for="blogModel.Heading" class="form-label">Heading</label>
+                <input asp-for="BlogPost.Heading" type="text" class="form-control" id="exampleInputEmail1">
+                <label asp-for="BlogPost.Heading" class="form-label">Heading</label>
 
         </div>
         <div class="form-floating mb-3">
-            <input asp-for="blogModel.PageTitle"  type="text" class="form-control" id="exampleInputEmail1">
-            <label asp-for="blogModel.PageTitle" class="form-label">Page Title</label>
+                <input asp-for="BlogPost.PageTitle" type="text" class="form-control" id="exampleInputEmail1">
+                <label asp-for="BlogPost.PageTitle" class="form-label">Page Title</label>
 
         </div>
             <div class="form-floating mb-3">
-                <textarea asp-for="blogModel.Content" class="form-control" style="height:100px" id="content"></textarea>
+                <textarea asp-for="BlogPost.Content" class="form-control" style="height:100px" id="content"></textarea>
             </div>
         <div class="form-floating mb-3">
-            <input asp-for="blogModel.ShortDescription"  type="text" class="form-control" id="exampleInputEmail1">
-            <label asp-for="blogModel.ShortDescription" class="form-label">Page Title</label>
+                <input asp-for="BlogPost.ShortDescription" type="text" class="form-control" id="exampleInputEmail1">
+                <label asp-for="BlogPost.ShortDescription" class="form-label">Page Title</label>
         </div>
 
         <div class="form-floating mb-3">
-            <input asp-for="blogModel.FeaturedImageUrl" type="text" class="form-control" id="exampleInputEmail1">
-            <label asp-for="blogModel.FeaturedImageUrl" class="form-label">Featured Image Url</label>
+                <input asp-for="BlogPost.FeaturedImageUrl" type="text" class="form-control" id="exampleInputEmail1">
+                <label asp-for="BlogPost.FeaturedImageUrl" class="form-label">Featured Image Url</label>
         </div>
         <div class="form-floating mb-3">
-            <input asp-for="blogModel.FeaturedImageUrl" type="text" class="form-control" id="exampleInputEmail1">
-            <label asp-for="blogModel.FeaturedImageUrl" class="form-label">Url Handle</label>
+                <input asp-for="BlogPost.FeaturedImageUrl" type="text" class="form-control" id="exampleInputEmail1">
+                <label asp-for="BlogPost.FeaturedImageUrl" class="form-label">Url Handle</label>
         </div>
-        
+
+            <div class="form-floating mb-3">
+                <input asp-for="Tags" type="text" class="form-control" id="exampleInputEmail1">
+                <label asp-for="Tags" i class="form-label">Tags (comma seperated)</label>
+            </div>
+
         <div class="col-12">
             <div class="form-check text-start">
-                <input asp-for="blogModel.Visible" class="form-check-input" type="checkbox" id="gridCheck">
-                <label asp-for="blogModel.Visible" class="form-check-label" for="gridCheck">
+                    <input asp-for="BlogPost.Visible" class="form-check-input" type="checkbox" id="gridCheck">
+                    <label asp-for="BlogPost.Visible" class="form-check-label" for="gridCheck">
                     Is Visible
                 </label>
             </div>
