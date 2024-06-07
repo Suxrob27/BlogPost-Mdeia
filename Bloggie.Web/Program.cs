@@ -1,4 +1,5 @@
 using Bloggie.Web.Controllers;
+using CloudinaryDotNet.Actions;
 using DB.Context;
 using DB.IRepository;
 using DB.Repository;
@@ -14,6 +15,7 @@ builder.Services.AddScoped<IBlogRepository, BlogRepository>();
 builder.Services.AddScoped<IImageRepostiory, ImageRepository>();
 builder.Services.AddDbContext<BlogDB>(opt =>
 opt.UseSqlServer(builder.Configuration.GetConnectionString("Defaoult"), b => b.MigrationsAssembly("DB")));
+builder.Services.AddScoped<ITagRepository, TagRepository>();
 var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
