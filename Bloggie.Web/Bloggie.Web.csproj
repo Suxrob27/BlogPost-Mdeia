@@ -1,7 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
-	<modules runAllManagedModulesForAllRequests="true">
-		<remove name="WebDAVModule"/>
-	</modules>
+
 
 	<PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>

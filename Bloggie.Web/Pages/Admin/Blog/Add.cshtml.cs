@@ -32,8 +32,8 @@ namespace Bloggie.Web.Pages.Admin.NewFolder.Blog
         {
 
         }
-        [HttpPost]
-        public async Task<IActionResult> OnPostAsync() 
+      
+        public async Task<IActionResult> OnPost() 
         {
            
             if (ModelState.IsValid && blogModel != null)
