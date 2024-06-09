@@ -12,6 +12,7 @@ namespace DB.IRepository
         Task<IEnumerable<BlogModel>> GetAllPosts();
         Task<BlogModel> GetAsync(Guid id);
         Task<BlogModel> GetAsync(string urlHnadler);
+        Task<IEnumerable<BlogModel>> GetAllAsync(string tagName);
         Task<BlogModel> AddAsync(BlogModel model);
         Task<BlogModel> UpdateAsync(BlogModel model);
         Task<bool> DeleteAsync(Guid id);

@@ -1,11 +1,22 @@
-﻿@page "{urlHandle}"
+﻿@page "blog/{urlHandle}"
 @model Bloggie.Web.Pages.Admin.Blog.DetailModel
 @{
     ViewData["Title"] = "zxc";
 }
-@if(Model.BlogModel != null)
-{
+
     <div class="container col-12 col-lg-6">
+    @if (Model.BlogModel != null)
+    {
+        @if (Model.BlogModel.Tags != null && Model.BlogModel.Tags.Any())
+        {
+            @foreach (var tags in Model.BlogModel.Tags)
+            {
+                <a href="/tags/@tags.Name">
+                <span class="badge rounded-pill bg-black">@tags</span>
+                </a>
+
+            }
+        }
         <p class="display-3">@Model.BlogModel.Heading</p>
         <div class="d-flex justify-content-between">
             <span class="text-secondary">Auhtor  - @Model.BlogModel.Author</span>
@@ -16,10 +27,9 @@
      <div class="mb-3 blog-details">
          @Html.Raw(Model.BlogModel.Content);
      </div>
-    </div>
 
 }
 else
 {
-    <p>The Blog post Was Not Found</p>
+    <p>The  Blog post Was Not Found</p>
 }

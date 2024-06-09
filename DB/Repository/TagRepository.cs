@@ -22,7 +22,6 @@ namespace DB.Repository
         {
             var tags = await _db.tags.ToListAsync();
             return tags.DistinctBy(x => x.Name.ToLower());
-
         }
     }
 }

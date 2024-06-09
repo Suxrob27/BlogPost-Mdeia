@@ -23,41 +23,50 @@
             <img src="https://images.pexels.com/photos/57690/pexels-photo-57690.jpeg?auto=compress&cs=tinysrgb&w=600"
                  class="d-block mx-lg-auto img-fluid" width="400" />
         </div>
+    </div>
+</div>
 
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-8>
-                    <h2 class="mb-5 display-3">Blogs</h2>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-6">
 
+            <h2 class="mb-5 display-3">Blogs</h2>
 
-                    @if(Model.Blogs != null && Model.Blogs.Any())
+            <div class="mb-5">
+                
+                @if (Model.Tags != null && Model.Tags.Any())
+                {
+                    foreach (var tag in Model.Tags)
                     {
-                        foreach (var blog in Model.Blogs)
-                        {
-                            if(Model.Tags != null && Model.Tags.Any())
-                            {
-                                @foreach (var tag in Model.Tags)
-                                {
-                                   <span class="badge bg-dark">@tag.Name</span>
-                                }
-                            }
-                            <div class="mb-5 bg-light box-shadow">
-                              <img src="@blog.FeaturedImageUrl" alt="@blog.Heading" class="mb-2 d-block img-fluid"/>
-                              <div class="px-4 py-4">
-                                  <h2 class="mb-2">@blog.Heading</h2>
-                                  <p>
-                                      Author - @blog.Author
-                                      <br />
-                                      Published Time - @blog.PublishedDate
-                                  </p>
-                                  <p class="mb-2">@blog.ShortDescription</p>
-                                    <a href="Admin/Blog/Details/@blog.UrlHandle" class="btn btn-dark">Read More</a>
-                              </div>
-                          </div>    
-                        }
+                        <a href="/tags/@tag.Name">
+                            <span class="badge bg-dark">@tag.Name</span>
+                        </a>
+
                     }
-                </div>
+                }
             </div>
+
+            @if (Model.Blogs != null && Model.Blogs.Any())
+            {
+                foreach (var blog in Model.Blogs)
+                {
+                    <div class="mb-5 bg-light box-shadow">
+                        <img src="@blog.FeaturedImageUrl" alt="@blog.Heading" class="mb-2 d-block img-fluid" />
+                        <div class="px-4 py-4">
+                            <h2 class="mb-2">@blog.Heading</h2>
+                            <p>
+                                Author: @blog.Author
+                                <br />
+                                Date Published: @blog.PublishedDate
+                            </p>
+                            <p class="mb-2">@blog.ShortDescription</p>
+                            <a href="/blog/@blog.UrlHandle" class="btn btn-dark">Read More</a>
+                        </div>
+                    </div>
+                }
+            }
         </div>
     </div>
 </div>
+
+

@@ -13,7 +13,7 @@ namespace Bloggie.Web.Pages.Admin.Blog
         {
             this.blogRepository = blogRepository;
         }
-        public async Task<IActionResult> OnGet(string urlHandle )
+        public async Task<IActionResult> OnGet(string urlHandle)
         {
             BlogModel = await blogRepository.GetAsync(urlHandle);   
             return Page();  

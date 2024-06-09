@@ -1,0 +1,27 @@
+﻿@page "/tags/{tagName}"
+@model Bloggie.Web.Pages.Tags.DetailsModel
+@{
+}
+<div class="container col-12 col-lg-6">
+    @if (Model.BlogModel != null && Model.BlogModel.Any())
+    {
+       @foreach (var blog in Model.BlogModel)
+        {
+            <p class="display-3">@blog.Heading</p>
+            <div class="d-flex justify-content-between">
+                <span class="text-secondary">Auhtor  - @blog.Author</span>
+                <span class="text-secondary">Published Date  - @blog.PublishedDate</span>
+            </div>
+            <img src="@blog.FeaturedImageUrl" class="d-block img-fluid mb-3" />
+
+            <div class="mb-3 blog-details">
+                @Html.Raw(blog.Content);
+            </div>
+        }
+   
+
+    }
+    else
+    {
+        <p>The Blog post Was Not Found</p>
+    }

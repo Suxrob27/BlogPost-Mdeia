@@ -35,6 +35,11 @@ namespace DB.Repository
 
         }
 
+        public async Task<IEnumerable<BlogModel>> GetAllAsync(string tagName)
+        {
+          return  await db.blogModel.Where(x => x.Tags.Any(x => x.Name == tagName)).Include(nameof(BlogModel.Tags)).ToListAsync();   
+        }
+
         public async Task<IEnumerable<BlogModel>> GetAllPosts()
         {
             return await db.blogModel.ToListAsync();
@@ -47,7 +52,7 @@ namespace DB.Repository
 
         public Task<BlogModel> GetAsync(string urlHnadler)
         {
-            return db.blogModel.FirstOrDefaultAsync(x => x.UrlHandle == urlHnadler);
+            return db.blogModel.Include(nameof(BlogModel.Tags)).FirstOrDefaultAsync(x => x.UrlHandle == urlHnadler);
         }
 
         public async Task<BlogModel> UpdateAsync(BlogModel blogPost)
