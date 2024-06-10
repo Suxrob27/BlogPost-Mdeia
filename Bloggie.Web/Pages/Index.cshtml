@@ -50,6 +50,17 @@
             {
                 foreach (var blog in Model.Blogs)
                 {
+                    if (Model.Tags != null && Model.Tags.Any())
+                    {
+                       foreach (var tags in Model.Tags)
+                        {
+                            if(tags.BlogPostId == blog.Id)
+                            {
+                                <span class="badge bg-black">@tags.Name</span>
+                            }
+                        }    
+                    
+                    }
                     <div class="mb-5 bg-light box-shadow">
                         <img src="@blog.FeaturedImageUrl" alt="@blog.Heading" class="mb-2 d-block img-fluid" />
                         <div class="px-4 py-4">

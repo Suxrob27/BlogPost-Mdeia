@@ -1,4 +1,4 @@
-﻿@page "blog/{urlHandle}"
+﻿@page "/blog/{urlHandle}"
 @model Bloggie.Web.Pages.Admin.Blog.DetailModel
 @{
     ViewData["Title"] = "zxc";
@@ -12,7 +12,7 @@
             @foreach (var tags in Model.BlogModel.Tags)
             {
                 <a href="/tags/@tags.Name">
-                <span class="badge rounded-pill bg-black">@tags</span>
+                <span class="badge rounded-pill bg-black">@tags.Name</span>
                 </a>
 
             }

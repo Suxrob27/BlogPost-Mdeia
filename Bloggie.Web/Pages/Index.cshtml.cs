@@ -10,8 +10,8 @@ namespace Bloggie.Web.Pages
         private readonly ILogger<IndexModel> _logger;
         private readonly IBlogRepository blogRepository;
         private readonly ITagRepository tagRepository;
-        public List<BlogModel> Blogs;
-        public List<Tag> Tags;
+        public List<BlogModel> Blogs = new List<BlogModel>();
+        public List<Tag> Tags = new List<Tag>();
 
         public IndexModel(ILogger<IndexModel> logger, IBlogRepository blogRepository, ITagRepository tagRepository)
         {
@@ -23,7 +23,17 @@ namespace Bloggie.Web.Pages
         public async Task<IActionResult> OnGet()
         {
             Blogs = (await blogRepository.GetAllPosts()).ToList();
-            Tags = (await tagRepository.GetAllAsync()).ToList(); 
+            foreach (var tags in Blogs)
+            {
+                if (tags.Tags != null )
+                {
+                    foreach (var tag in tags.Tags)
+                    {
+                        Tags.Add(tag);
+                    }
+                }
+            }
+            
             return Page();
         }
     }

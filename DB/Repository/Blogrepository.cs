@@ -42,7 +42,7 @@ namespace DB.Repository
 
         public async Task<IEnumerable<BlogModel>> GetAllPosts()
         {
-            return await db.blogModel.ToListAsync();
+            return await db.blogModel.Include(nameof(BlogModel.Tags)).ToListAsync();
         }
 
         public async Task<BlogModel> GetAsync(Guid id)
