@@ -10,6 +10,7 @@ namespace DB.Context
 {
     public class AuthDb : IdentityDbContext
     {
+        public DbSet<ApplicationUser> applicationUser { get; set; } 
         public AuthDb(DbContextOptions<AuthDb> options) : base(options)
         {
                 

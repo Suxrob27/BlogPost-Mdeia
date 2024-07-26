@@ -31,7 +31,7 @@ namespace Bloggie.Web.Pages.User
 
         public async Task<IActionResult> OnGet()
         {
-            if (roleManager.RoleExistsAsync(SD.Admin).GetAwaiter().GetResult())
+            if (!roleManager.RoleExistsAsync(SD.Admin).GetAwaiter().GetResult())
             {
                 await roleManager.CreateAsync(new IdentityRole(SD.Admin));
                 await roleManager.CreateAsync(new IdentityRole(SD.User));
@@ -58,32 +58,39 @@ namespace Bloggie.Web.Pages.User
                 };
                 TempData["Notification"] = JsonSerializer.Serialize(notification);  
           }
-            var user = new ApplicationUser()
+            if (ModelState.IsValid)
             {
-                Name = registrationModel.Name,
-                Email = registrationModel.Email,
-                UserName = registrationModel.Name,
-                DateCreated = DateTime.Now,
-            };
-            var result = await _userManager.CreateAsync(user);
-            if (result.Succeeded)
-            {
-                if (registrationModel.RoleList != null)
-                {
-                    await _userManager.AddToRoleAsync(user, registrationModel.RoleSelected);
-                }
-                else
-                {
-                    await _userManager.AddToRoleAsync(user, SD.Admin);
-                }
-                var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                var callbackurl = Url.Page("/User/ConfirmEmail", new { userId = user.Id, token =  code });
 
-                await emailServise.Send("suxrobvjl1@gmail.com", user.Email, "Please confirm Your Email",
-                     $"Please Click on This Link Yo Confirm Your Email Address :{callbackurl}");
+
+                var user = new ApplicationUser()
+                {
+                    Email = registrationModel.Email,
+                    Name = registrationModel.Email,
+                    UserName = registrationModel.Name,
+                    DateCreated = DateTime.Now,
+                };
+                var result = await _userManager.CreateAsync(user, registrationModel.Password);
+                if (result.Succeeded)
+                {
+                    if (registrationModel.RoleList != null)
+                    {
+                        await _userManager.AddToRoleAsync(user, registrationModel.RoleSelected);
+                    }
+                    else
+                    {
+                        await _userManager.AddToRoleAsync(user, SD.Admin);
+                    }
+                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                    var callbackurl = Url.Page("/User/ConfirmEmail", new { userId = user.Id, token = code });
+
+                    await emailServise.Send("suxrobvjl1@gmail.com", user.Email, "Please confirm Your Email",
+                         $"Please Click on This Link Yo Confirm Your Email Address :{callbackurl}");
+                    return RedirectToPage("/Index");
+                }
                 return RedirectToPage("/Index");
             }
             return RedirectToPage("/Index");
+
         }
     }
 }

@@ -2,7 +2,8 @@
 @model Bloggie.Web.Pages.User.RegistrationModel
 @{
 }
-div class="row col-md-10 offset-md-1">
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+<div class="row col-md-10 offset-md-1">
 <h1 class="text-primary text-center pt-2">Register</h1>
 <form method="post" >
     <div class="border p-2 rounded">
@@ -12,7 +13,7 @@ div class="row col-md-10 offset-md-1">
             <label asp-for="registrationModel.Email" class="col-12"></label>
             <div class="col-md-12">
                 <input asp-for="registrationModel.Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
+                    <span asp-validation-for="registrationModel.Email" class="text-danger"></span>
             </div>
         </div>
         <div class="form-group">
@@ -42,7 +43,7 @@ div class="row col-md-10 offset-md-1">
                 <select asp-for="registrationModel.RoleSelected" asp-items="@Model.registrationModel.RoleList" class="form-select">
                     <option disabled selected>--Select Role--</option>
                 </select>
-                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                    <span asp-validation-for="registrationModel.ConfirmPassword" class="text-danger"></span>
             </div>
         </div>
         <div class="form-group pt-3">
