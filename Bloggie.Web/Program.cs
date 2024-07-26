@@ -2,7 +2,9 @@ using Bloggie.Web.Controllers;
 using CloudinaryDotNet.Actions;
 using DB.Context;
 using DB.IRepository;
+using DB.Model;
 using DB.Repository;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
@@ -11,11 +13,17 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddControllers();
+builder.Services.Configure<SMTP>(builder.Configuration.GetSection("Brevo"));
 builder.Services.AddScoped<IBlogRepository, BlogRepository>();
 builder.Services.AddScoped<IImageRepostiory, ImageRepository>();
 builder.Services.AddDbContext<BlogDB>(opt =>
 opt.UseSqlServer(builder.Configuration.GetConnectionString("Defaoult"), b => b.MigrationsAssembly("DB")));
 builder.Services.AddScoped<ITagRepository, TagRepository>();
+builder.Services.AddScoped<IEmailServise, EmailServise>();
+builder.Services.AddDbContext<AuthDb>(opt =>
+opt.UseSqlServer(builder.Configuration.GetConnectionString("AuthDb")));
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+        .AddEntityFrameworkStores<AuthDb>().AddDefaultTokenProviders();
 var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -29,7 +37,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapRazorPages();
