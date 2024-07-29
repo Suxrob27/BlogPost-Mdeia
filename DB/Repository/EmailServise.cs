@@ -27,11 +27,17 @@ namespace DB.Repository
             string subject,
             string body)
         {
+
+            var message = new MailMessage(from, to, subject, body);
+
+
             using (var emailClient = new SmtpClient(smtpSetting.Value.Server, smtpSetting.Value.Port))
             {
                 emailClient.Credentials = new NetworkCredential(
                     smtpSetting.Value.Login,
                     smtpSetting.Value.Password);
+
+                await emailClient.SendMailAsync(message);   
             }
         }
     }

@@ -10,10 +10,12 @@ namespace Bloggie.Web.Pages.User
     public class ConfirmEmailModel : PageModel
     {
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> signInManager;
 
-        public ConfirmEmailModel(UserManager<ApplicationUser> userManager)
+        public ConfirmEmailModel(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
         {
             _userManager = userManager;
+            this.signInManager = signInManager;
         }
         public async Task<IActionResult> OnGet(string userId, string token)
         {
@@ -23,6 +25,7 @@ namespace Bloggie.Web.Pages.User
                 var result = await _userManager.ConfirmEmailAsync(user, token);
                 if (result.Succeeded)
                 {
+                    await signInManager.SignInAsync(user, isPersistent: false); 
                     var notification = new NotificationModel
                     {
                         Message = "Email Address is successfully confirmed, you can now try to login",

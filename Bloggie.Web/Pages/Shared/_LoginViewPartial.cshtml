@@ -1,28 +1,28 @@
 ﻿@using DB.Context
 @using Microsoft.AspNetCore.Identity
 
-@inject SignInManager<ApplicationUser> _signInManger
-@inject UserManager<ApplicationUser> _usesrManager
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
 
 <ul class="navbar-nav">
-    @if (_signInManger.IsSignedIn(User))
+
+    @if (SignInManager.IsSignedIn(User))
     {
-        <li class ="navbar-item">Hello  @_usesrManager.GetUserName(User)</li>
         <li class="nav-item">
-            <form method="get" asp-page="/User/LogOff">
-              <button type="submit" class="btn nav-link">Log Out</button>    
+            <a class="nav-link" href="#">Hello @UserManager.GetUserName(User)</a>
+        </li>
+        <li class="nav-item">
+            <form id="logoutForm" method="post" class="form-inline" asp-controller="Account" asp-action="LogOff">
+                <button type="submit" class="btn nav-link">Logout</button>
             </form>
         </li>
     }
-  
     else
-        {
-            <li class="nav-item">
-            <a class="nav-link" asp-page="/User/Registration">Register</a>
-            </li>
-            <li class="nav-item">
-            <a class="nav-link" asp-page="/User/LogIn">Login</a>
-            </li>
-        }
-    
+    {
+        <li class="nav-item">
+            <a class="nav-link" asp-page="/User/Login">Login</a>
+        </li>
+
+    }
 </ul>

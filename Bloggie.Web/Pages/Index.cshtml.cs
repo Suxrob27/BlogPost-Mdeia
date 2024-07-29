@@ -1,7 +1,9 @@
 using DB.IRepository;
 using DB.Model;
+using DB.Model.Notification;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Text.Json;
 
 namespace Bloggie.Web.Pages
 {
@@ -22,6 +24,11 @@ namespace Bloggie.Web.Pages
 
         public async Task<IActionResult> OnGet()
         {
+            var notification = (string)TempData["Notification"];
+            if (notification != null)
+            {
+                ViewData["Notification"] = JsonSerializer.Deserialize<NotificationModel>(notification); 
+            }
             Blogs = (await blogRepository.GetAllPosts()).ToList();
             foreach (var tags in Blogs)
             {

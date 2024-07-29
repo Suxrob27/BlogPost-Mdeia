@@ -1,0 +1,56 @@
+﻿@page
+@model Bloggie.Web.Pages.User.LoginModel
+@{
+}
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<div class="row col-md-10 offset-md-1">
+    <h1 class="text-primary text-center pt-2">Log in</h1>
+    <form method="post" asp-controller="Account" asp-action="Login" asp-route-returnurl="@ViewData["ReturnUrl"]">
+        <div class="border p-2 rounded">
+            <p class="text-center">Create a new account</p>
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="model.Email" class="col-12"></label>
+                <div class="col-md-12">
+                    <input asp-for="model.Email" class="form-control" />
+                    <span asp-validation-for="model.Email" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="model.Password" class="col-12"></label>
+                <div class="col-md-12">
+                    <input asp-for="model.Password" class="form-control" />
+                    <span asp-validation-for="model.Password" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group pt-2">
+                <div class="col-md-12">
+                    <div class="custom-checkbox">
+                        <label>
+                            <input asp-for="model.RememberMe" />
+                            Remember me
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group pt-3">
+
+                <div class="col-md-6 offset-md-3">
+                    <button class="btn btn-success form-control" type="submit">
+                        Login
+                    </button>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <a asp-page="/User/Registration"> Register as a new user?</a>
+                    </div>
+                    <div class="col-6 text-end">
+                        <a class="/User/ForgotPassword"> Forgot your password?</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>

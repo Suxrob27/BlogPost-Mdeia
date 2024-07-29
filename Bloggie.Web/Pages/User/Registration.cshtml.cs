@@ -81,7 +81,7 @@ namespace Bloggie.Web.Pages.User
                         await _userManager.AddToRoleAsync(user, SD.Admin);
                     }
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    var callbackurl = Url.Page("/User/ConfirmEmail", new { userId = user.Id, token = code });
+                    var callbackurl = Url.PageLink("/User/ConfirmEmail", values : new { userId = user.Id, token = code });
 
                     await emailServise.Send("suxrobvjl1@gmail.com", user.Email, "Please confirm Your Email",
                          $"Please Click on This Link Yo Confirm Your Email Address :{callbackurl}");

@@ -27,7 +27,7 @@ namespace Bloggie.Web.Pages.Admin.Blog
             {
                 ViewData["Notification"] =  JsonSerializer.Deserialize<NotificationModel>(notificationJson);
             }
-            blogList = (await _blogRepository.GetAllPosts())?.ToList(); ;
+            blogList = (await _blogRepository.GetAllPosts())?.ToList(); 
         }
     }
 }
