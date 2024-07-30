@@ -23,12 +23,18 @@ namespace Bloggie.Web.Pages.User
 
         public void OnGet()
         {
+            var notificationJson = (string)TempData["Notification"];
+            if (notificationJson != null)
+            {
+                ViewData["Notification"] = JsonSerializer.Deserialize<NotificationModel>(notificationJson);
+            }
         }
 
         public async Task<IActionResult> OnPost(string returnUrl = null)
         {
             if (ModelState.IsValid)
             {
+
                 var result = await signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: true);
                 if (result.Succeeded)
                 {
