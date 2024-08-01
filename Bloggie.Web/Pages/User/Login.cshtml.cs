@@ -1,3 +1,4 @@
+using Bloggie.Web.Pages.TwoFactorAuthentication;
 using DB.Context;
 using DB.Model.Notification;
 using DB.Model.User;
@@ -48,7 +49,7 @@ namespace Bloggie.Web.Pages.User
 
                 if (result.RequiresTwoFactor)
                 {
-                    return RedirectToPage("/User/TwoFactorAuth");
+                    return RedirectToPage("/TwoFactorAuthentication/VerifyAuthenticatorCode", new { rememberMe = model.RememberMe ,  returnUrl });
                 }
                 if (result.IsLockedOut)
                 {

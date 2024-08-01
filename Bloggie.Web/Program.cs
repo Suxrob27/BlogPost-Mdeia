@@ -24,6 +24,17 @@ builder.Services.AddDbContext<AuthDb>(opt =>
 opt.UseSqlServer(builder.Configuration.GetConnectionString("AuthDb")));
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
         .AddEntityFrameworkStores<AuthDb>().AddDefaultTokenProviders();
+builder.Services.Configure<IdentityOptions>(opt =>
+{
+    opt.Password.RequireDigit = false;
+    opt.Password.RequireLowercase = false;
+    opt.Password.RequireNonAlphanumeric = false;
+    opt.Password.RequireUppercase = false;
+    
+    opt.Lockout.MaxFailedAccessAttempts = 3;
+    opt.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);      
+    opt.SignIn.RequireConfirmedEmail = true;
+});
 var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

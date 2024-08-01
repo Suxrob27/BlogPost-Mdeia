@@ -1,0 +1,38 @@
+﻿@page
+@model Bloggie.Web.Pages.TwoFactorAuthentication.VerifyAuthenticatorCodeModel
+@{
+}
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<div class="row col-md-10 offset-md-1">
+    <h1 class="text-primary text-center pt-2">Verfiy Authenticator Code</h1>
+    <form method="post" asp-controller="Account" asp-action="VerifyAuthenticatorCode">
+        <input asp-for="model.RememberMe" type="hidden" />
+        <div class="border p-2 rounded">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="model.Code" class="col-12"></label>
+                <div class="col-md-12">
+                    <input asp-for="model.Code" class="form-control" />
+                    <span asp-validation-for="model.Code" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group pt-3">
+
+                <div class="col-md-6 offset-md-3">
+                    <button class="btn btn-success form-control" type="submit">
+                        Submit
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -54,5 +54,15 @@
                 </button>
             </div>
         </div>
+            <div class="row">
+                <div class="col-6">
+                    <a asp-page="/User/Login"> Have a Account? Log In</a>
+                </div>
     </div>
 </form>
+
+    @section Scripts {
+        @{
+            await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        }
+    }

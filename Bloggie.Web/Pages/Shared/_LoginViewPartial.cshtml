@@ -17,11 +17,26 @@
                 <button type="submit" class="btn nav-link">Logout</button>
             </form>
         </li>
+        
+            var twofactorEnabled = ViewData["2FactorAuth"];
+
+            if (twofactorEnabled != null && twofactorEnabled.ToString().ToLower() == "true")
+            {
+            <a asp-page="/TwoFactorAuthentication/RemoveAuthenticator"> Remove & Reset Authenticatior</a>
+            }
+        else
+        {
+            <li class="nav-item">
+                <a class="nav-link" asp-page="/TwoFactorAuthentication/EnableAuthentication">Enable Two Factor Authentication</a>
+            </li>
+        }
+       
+        
     }
     else
     {
         <li class="nav-item">
-            <a class="nav-link" asp-page="/User/Login">Login</a>
+            <a class="nav-link" asp-page="/User/Login" asp-route-returnUrl = "@Context.Request.Path">Login</a>
         </li>
 
     }
