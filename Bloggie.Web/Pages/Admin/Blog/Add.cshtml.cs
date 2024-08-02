@@ -2,6 +2,7 @@ using DB.Context;
 using DB.IRepository;
 using DB.Model;
 using DB.Model.Notification;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Security.Cryptography;
@@ -10,6 +11,7 @@ using System.Text.Json.Serialization;
 
 namespace Bloggie.Web.Pages.Admin.NewFolder.Blog
 {
+    [Authorize]
     public class AddModel : PageModel
      {
         private readonly BlogDB _db;

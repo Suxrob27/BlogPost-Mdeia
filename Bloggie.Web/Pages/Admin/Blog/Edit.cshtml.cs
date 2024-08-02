@@ -8,9 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System;
 using System.Text.Json;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Bloggie.Web.Pages.Admin.Blog
 {
+    [Authorize]
     public class EditModel : PageModel
     {
         private readonly IBlogRepository blogPostRepository;

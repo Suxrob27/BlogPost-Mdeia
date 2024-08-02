@@ -1,12 +1,15 @@
 using DB.IRepository;
 using DB.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Bloggie.Web.Pages.Admin.Blog
 {
+    [Authorize]
     public class DetailModel : PageModel
     {
+
         private readonly IBlogRepository blogRepository;
         public BlogModel BlogModel;
         public DetailModel(IBlogRepository blogRepository)

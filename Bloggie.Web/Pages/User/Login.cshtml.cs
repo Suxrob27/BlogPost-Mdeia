@@ -56,7 +56,7 @@ namespace Bloggie.Web.Pages.User
                     var notification = new NotificationModel()
                     {
                         Message = "Sorry But Your Account Has Been Locked Try it Again",
-                        Type = NotificationType.Info,
+                        Type = NotificationType.Error,
                     };
                     TempData["Notification"] = JsonSerializer.Serialize(notification);
                     return RedirectToPage("/Index");
@@ -67,7 +67,7 @@ namespace Bloggie.Web.Pages.User
                 var notification = new NotificationModel()
                 {
                     Message = "We Could Not Find so kind Of Acccount. It Seems that You need to Register First",
-                    Type = NotificationType.Info,
+                    Type = NotificationType.Error,
                 };
                 TempData["Notification"] = JsonSerializer.Serialize(notification);
                 return RedirectToPage("/User/Registration");

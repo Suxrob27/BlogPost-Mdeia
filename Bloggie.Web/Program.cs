@@ -1,5 +1,6 @@
 using Bloggie.Web.Controllers;
 using CloudinaryDotNet.Actions;
+using DB;
 using DB.Context;
 using DB.IRepository;
 using DB.Model;
@@ -13,6 +14,16 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddControllers();
+builder.Services.AddAuthorization(opt => 
+{
+    opt.AddPolicy("Admin", policy => policy.RequireRole(SD.Admin));
+});
+builder.Services.ConfigureApplicationCookie(opt =>
+{
+    opt.AccessDeniedPath = new PathString("/User/AccessDeniedPage");
+    opt.LoginPath = new PathString("/User/Login");
+
+});
 builder.Services.Configure<SMTP>(builder.Configuration.GetSection("Brevo"));
 builder.Services.AddScoped<IBlogRepository, BlogRepository>();
 builder.Services.AddScoped<IImageRepostiory, ImageRepository>();

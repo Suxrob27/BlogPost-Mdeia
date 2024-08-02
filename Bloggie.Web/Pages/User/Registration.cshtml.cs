@@ -17,6 +17,7 @@ namespace Bloggie.Web.Pages.User
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IEmailServise emailServise;
         private readonly RoleManager<IdentityRole> roleManager;
+        private IdentityResult allresult { get; set; }  
 
         [BindProperty]
         public RegistrationViewModel registrationModel { get; set; }  
@@ -70,15 +71,16 @@ namespace Bloggie.Web.Pages.User
                     DateCreated = DateTime.Now,
                 };
                 var result = await _userManager.CreateAsync(user, registrationModel.Password);
+                allresult = result;
                 if (result.Succeeded)
                 {
-                    if (registrationModel.RoleList != null)
+                    if (registrationModel.RoleSelected != null)
                     {
                         await _userManager.AddToRoleAsync(user, registrationModel.RoleSelected);
                     }
                     else
                     {
-                        await _userManager.AddToRoleAsync(user, SD.Admin);
+                        await _userManager.AddToRoleAsync(user, SD.User);
                     }
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     var callbackurl = Url.PageLink("/User/ConfirmEmail", values: new { userId = user.Id, token = code });
@@ -95,16 +97,15 @@ namespace Bloggie.Web.Pages.User
                 }
                 return RedirectToPage("/Index");
             }
-            else
-            {
-                var notification = new NotificationModel()
+
+                var notification2 = new NotificationModel()
                 {
-                    Message = "Sorry but Something Went Wrong.Try it Again Or Later",
+                    Message = $"{allresult.Errors.ToList()}",
                     Type = NotificationType.Error,
                 };
-                TempData["Notification"] = JsonSerializer.Serialize(notification);
+                TempData["Notification"] = JsonSerializer.Serialize(notification2);
                 return RedirectToPage("/Index");
-            }
+            
         }
     }
 }
