@@ -2,6 +2,7 @@ using Bloggie.Web.Pages.TwoFactorAuthentication;
 using DB.Context;
 using DB.Model.Notification;
 using DB.Model.User;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -9,6 +10,8 @@ using System.Text.Json;
 
 namespace Bloggie.Web.Pages.User
 {
+    [AllowAnonymous]
+    [ValidateAntiForgeryToken]
     public class LoginModel : PageModel
     {
         [BindProperty]
@@ -31,7 +34,7 @@ namespace Bloggie.Web.Pages.User
             }
         }
 
-        public async Task<IActionResult> OnPost(string returnUrl = null)
+        public async Task<IActionResult> OnPost()
         {
             if (ModelState.IsValid)
             {
@@ -44,12 +47,12 @@ namespace Bloggie.Web.Pages.User
                         Message = "Congratullations You have successfully signed up to this web site",
                         Type = NotificationType.Success,
                     };
-                    return RedirectToPage(returnUrl);
+                    return RedirectToPage("/Index");
                 }
 
                 if (result.RequiresTwoFactor)
                 {
-                    return RedirectToPage("/TwoFactorAuthentication/VerifyAuthenticatorCode", new { rememberMe = model.RememberMe ,  returnUrl });
+                    return RedirectToPage("/TwoFactorAuthentication/VerifyAuthenticatorCode", new { rememberMe = model.RememberMe  });
                 }
                 if (result.IsLockedOut)
                 {

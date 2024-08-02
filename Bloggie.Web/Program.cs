@@ -7,7 +7,7 @@ using DB.Model;
 using DB.Repository;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,12 +18,8 @@ builder.Services.AddAuthorization(opt =>
 {
     opt.AddPolicy("Admin", policy => policy.RequireRole(SD.Admin));
 });
-builder.Services.ConfigureApplicationCookie(opt =>
-{
-    opt.AccessDeniedPath = new PathString("/User/AccessDeniedPage");
-    opt.LoginPath = new PathString("/User/Login");
 
-});
+
 builder.Services.Configure<SMTP>(builder.Configuration.GetSection("Brevo"));
 builder.Services.AddScoped<IBlogRepository, BlogRepository>();
 builder.Services.AddScoped<IImageRepostiory, ImageRepository>();
@@ -45,6 +41,13 @@ builder.Services.Configure<IdentityOptions>(opt =>
     opt.Lockout.MaxFailedAccessAttempts = 3;
     opt.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);      
     opt.SignIn.RequireConfirmedEmail = true;
+
+});
+builder.Services.ConfigureApplicationCookie(opt =>
+{
+    opt.AccessDeniedPath = new PathString("/User/AccessDeniedPage");
+    opt.LoginPath = new PathString("/User/Login");
+
 });
 var app = builder.Build();
 // Configure the HTTP request pipeline.
@@ -57,7 +60,6 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
