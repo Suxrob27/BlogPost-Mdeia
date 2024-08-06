@@ -1,4 +1,5 @@
 ﻿using DB.Model;
+using DB.Model.BlogPostLike;
 using Microsoft.EntityFrameworkCore;
 
 namespace DB.Context
@@ -11,6 +12,7 @@ namespace DB.Context
         }
         public DbSet<BlogModel> blogModel { get; set; }
         public DbSet<Tag> tags { get; set; }
+        public DbSet<BlogPostLikeViewModel> blogPostLikes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

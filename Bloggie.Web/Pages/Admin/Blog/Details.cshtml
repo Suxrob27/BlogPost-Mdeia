@@ -1,12 +1,39 @@
 ﻿@page "/blog/{urlHandle}"
+@using DB.Context
+@using Microsoft.AspNetCore.Identity
 @model Bloggie.Web.Pages.Admin.Blog.DetailModel
 @{
     ViewData["Title"] = "zxc";
 }
+@inject UserManager<ApplicationUser> userManager ;
+@inject SignInManager<ApplicationUser> sigInManager ;
 
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <div class="container col-12 col-lg-6">
     @if (Model.BlogModel != null)
     {
+        <div>
+
+            @{
+                if (Model.Liked)
+                {
+                    <a style="cursor:pointer">
+                        <span class="material-symbols-outlined">
+                            thumb_up
+                        </span>
+                    </a>
+                    <span id="totalLikes">@Model.BlogModel.Likes.Count>Likes</span>
+                }
+                else
+                {
+                    <a id="btnLike" style="cursor:pointer">
+                        <span class="material-symbols-outlined">thumb_up</span>
+                    </a>
+                    <span id="totalLikes">@Model.BlogModel.Likes.Count> likes</span>
+                }
+            }
+
+        </div> 
         @if (Model.BlogModel.Tags != null && Model.BlogModel.Tags.Any())
         {
             @foreach (var tags in Model.BlogModel.Tags)
@@ -29,6 +56,44 @@
      </div>
 
 }
+    @section Scripts {
+        <script>
+                const btnLike = document.getElementById('btnLike');
+                const totalLikesElement = document.getElementById('totalLikes');
+
+                async function getTotalLikes() {
+                fetch('/api/BlogPostLike/@Model.BlogModel.Id/totallikes', {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': '*/*'
+                        }
+                    })
+                        .then(data => data.json())
+                        .then(result => totalLikesElement.innerHTML = result);
+                }
+
+            async function addLikeForBlog() {
+
+                fetch('/api/BlogPostLike/add', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': '*/*'
+                    },
+                    body: JSON.stringify({ blogPostId: '@Model.BlogModel.Id', userId: '@userManager.GetUserId(User)' })
+                })
+                    .then(() => {
+                        btnLike.innerHTML = '<span class="material-symbols-outlined">thumb_up</span>'
+                        btnLike.removeEventListener('click', addLikeForBlog);
+                        getTotalLikes();
+                    });
+            }
+
+            btnLike.addEventListener('click', addLikeForBlog);
+
+        </script>
+    }
 else
 {
     <p>The  Blog post Was Not Found</p>

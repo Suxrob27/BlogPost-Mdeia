@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DB.Model.BlogPostLike;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,5 +20,6 @@ namespace DB.Model
         public string? Author { get; set; }
         public bool Visible { get; set; }
         public ICollection<Tag> Tags { get; set; }
+        public ICollection<BlogPostLikeViewModel> Likes { get; set; } = new List<BlogPostLikeViewModel>();   
     }
 }
