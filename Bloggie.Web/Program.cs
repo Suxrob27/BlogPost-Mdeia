@@ -28,8 +28,9 @@ opt.UseSqlServer(builder.Configuration.GetConnectionString("Defaoult"), b => b.M
 builder.Services.AddScoped<ITagRepository, TagRepository>();
 builder.Services.AddScoped<IEmailServise, EmailServise>();
 builder.Services.AddScoped<IBlogPostLikeRepository, BlogPostLikeRepository>();
+builder.Services.AddScoped<IBlogPostCommentRepository, BlogPostCommentRepository>();
 builder.Services.AddDbContext<AuthDb>(opt =>
-opt.UseSqlServer(builder.Configuration.GetConnectionString("AuthDb")), ServiceLifetime.Transient);
+opt.UseSqlServer(builder.Configuration.GetConnectionString("AuthDb")));
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
         .AddEntityFrameworkStores<AuthDb>().AddDefaultTokenProviders();
 builder.Services.Configure<IdentityOptions>(opt =>

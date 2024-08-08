@@ -66,7 +66,33 @@ namespace DB.Migrations
                     b.ToTable("blogModel");
                 });
 
-            modelBuilder.Entity("DB.Model.BlogPostLikeViewModel", b =>
+            modelBuilder.Entity("DB.Model.BlogPostCommentViewModel", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("BlogModelId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("BlogPostId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BlogModelId");
+
+                    b.ToTable("blogPostComments");
+                });
+
+            modelBuilder.Entity("DB.Model.BlogPostLike.BlogPostLikeViewModel", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -111,7 +137,14 @@ namespace DB.Migrations
                     b.ToTable("tags");
                 });
 
-            modelBuilder.Entity("DB.Model.BlogPostLikeViewModel", b =>
+            modelBuilder.Entity("DB.Model.BlogPostCommentViewModel", b =>
+                {
+                    b.HasOne("DB.Model.BlogModel", null)
+                        .WithMany("Comments")
+                        .HasForeignKey("BlogModelId");
+                });
+
+            modelBuilder.Entity("DB.Model.BlogPostLike.BlogPostLikeViewModel", b =>
                 {
                     b.HasOne("DB.Model.BlogModel", null)
                         .WithMany("Likes")
@@ -127,6 +160,8 @@ namespace DB.Migrations
 
             modelBuilder.Entity("DB.Model.BlogModel", b =>
                 {
+                    b.Navigation("Comments");
+
                     b.Navigation("Likes");
 
                     b.Navigation("Tags");

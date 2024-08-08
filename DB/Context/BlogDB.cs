@@ -13,6 +13,7 @@ namespace DB.Context
         public DbSet<BlogModel> blogModel { get; set; }
         public DbSet<Tag> tags { get; set; }
         public DbSet<BlogPostLikeViewModel> blogPostLikes { get; set; }
+        public DbSet<BlogPostCommentViewModel> blogPostComments { get; set; }   
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

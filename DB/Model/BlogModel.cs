@@ -21,5 +21,6 @@ namespace DB.Model
         public bool Visible { get; set; }
         public ICollection<Tag> Tags { get; set; }
         public ICollection<BlogPostLikeViewModel> Likes { get; set; } = new List<BlogPostLikeViewModel>();   
+        public ICollection<BlogPostCommentViewModel> Comments { get;set; }
     }
 }
