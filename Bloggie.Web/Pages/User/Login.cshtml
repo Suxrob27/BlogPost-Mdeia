@@ -23,7 +23,7 @@
             <div class="form-group">
                 <label asp-for="model.Password" class="col-12"></label>
                 <div class="col-md-12">
-                    <input asp-for="model.Password" class="form-control" />
+                    <input asp-for="model.Password" class="form-control" required minlength="6"/>
                     <span asp-validation-for="model.Password" class="text-danger"></span>
                 </div>
             </div>
@@ -55,3 +55,8 @@
             </div>
         </div>
     </form>
+    @section Scripts {
+        @{
+            await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        }
+    }
