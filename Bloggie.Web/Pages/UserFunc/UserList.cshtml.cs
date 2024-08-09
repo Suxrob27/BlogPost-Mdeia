@@ -1,7 +1,9 @@
 using DB.Context;
+using DB.Model.Notification;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Text.Json;
 
 namespace Bloggie.Web.Pages.UserFunc
 {
@@ -21,6 +23,11 @@ namespace Bloggie.Web.Pages.UserFunc
 
         public async Task<IActionResult> OnGet()
         {
+            var notification = (string)TempData["Notification"];
+            if (notification != null)
+            {
+                ViewData["Notification"] = JsonSerializer.Deserialize<NotificationModel>(notification);
+            }
             Users = _dB.applicationUser.ToList();
             foreach (var user in Users)
             {
