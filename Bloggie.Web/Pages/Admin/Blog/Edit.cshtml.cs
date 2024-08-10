@@ -13,7 +13,7 @@ using DB.Model.BlogFunc;
 
 namespace Bloggie.Web.Pages.Admin.Blog
 {
-    [Authorize]
+    [Authorize(Policy = "superAdmin")]
     public class EditModel : PageModel
     {
         private readonly IBlogRepository blogPostRepository;
@@ -33,6 +33,7 @@ namespace Bloggie.Web.Pages.Admin.Blog
             this.blogPostRepository = blogPostRepository;
         }
 
+        [Authorize(Policy = "superAdmin")]
         public async Task OnGet(Guid id)
         {
             var blogPostDomainModel = await blogPostRepository.GetAsync(id);

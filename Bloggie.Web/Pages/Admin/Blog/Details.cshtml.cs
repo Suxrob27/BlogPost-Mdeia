@@ -11,7 +11,7 @@ using System.Security;
 
 namespace Bloggie.Web.Pages.Admin.Blog
 {
-    [Authorize]
+    [Authorize()]
     public class DetailModel : PageModel
     {
 

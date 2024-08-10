@@ -28,6 +28,7 @@ namespace Bloggie.Web.Pages
 
         public async Task<IActionResult> OnGet()
         {
+    
             var notification = (string)TempData["Notification"];
             if (notification != null)
             {

@@ -93,12 +93,14 @@ namespace Bloggie.Web.Pages.UserFunc
             }
             else
             {
+                var claims = userManager.GetClaimsAsync(user);
                 var notification = new NotificationModel()
                 {
                     Message = "Claims assigned successfully",
                     Type = NotificationType.Success
                 };
                 TempData["Notification"] = JsonSerializer.Serialize(notification);
+
                 return RedirectToPage("/UserFunc/UserList");
             }
         }

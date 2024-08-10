@@ -4,6 +4,7 @@ using DB.Model;
 using DB.Model.Notification;
 using DB.Model.User;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Security.Cryptography;
@@ -12,11 +13,12 @@ using System.Text.Json.Serialization;
 
 namespace Bloggie.Web.Pages.Admin.NewFolder.Blog
 {
-    [Authorize]
+    [Authorize(Policy = "superAdmin")]
     public class AddModel : PageModel
      {
         private readonly BlogDB _db;
         private readonly IBlogRepository blogRepository;
+        private readonly UserManager<ApplicationUser> _userManager;
 
         [BindProperty]
         public AddViewModel blogModel { get; set; }
@@ -25,15 +27,16 @@ namespace Bloggie.Web.Pages.Admin.NewFolder.Blog
 
         [BindProperty]
         public string Tags { get; set; }
-        public AddModel(BlogDB db, IBlogRepository blogRepository)
+        public AddModel(BlogDB db, IBlogRepository blogRepository, UserManager<ApplicationUser> userManager)
         {
             _db = db;
             this.blogRepository = blogRepository;
+            _userManager = userManager;
         }
 
-        public void OnGet()
+        public async void OnGet()
         {
-
+          
         }
       
         public async Task<IActionResult> OnPost() 
