@@ -29,7 +29,7 @@ namespace Bloggie.Web.Pages.UserFunc
                     Message = "Bro s+orry, but So Kind Of User Could not be found",
                     Type = NotificationType.Error
                 };
-                TempData["Notififcation"] = JsonSerializer.Serialize(notification);
+                TempData["Notification"] = JsonSerializer.Serialize(notification);
                 return RedirectToPage("/UsserFunc/UserList");
             }
             var exsitingClaim = await userManager.GetClaimsAsync(user);
@@ -63,7 +63,7 @@ namespace Bloggie.Web.Pages.UserFunc
                     Message = "Bro s+orry, but So Kind Of User Could not be found",
                     Type = NotificationType.Error
                 };
-                TempData["Notififcation"] = JsonSerializer.Serialize(notification);
+                TempData["Notification"] = JsonSerializer.Serialize(notification);
                 return RedirectToPage("/UserFunc/UserList");
             }
 
@@ -76,7 +76,7 @@ namespace Bloggie.Web.Pages.UserFunc
                     Message = "Bro sorry, but smth went wrong. Try it again Or Later either wrtie your problem to support.",
                     Type = NotificationType.Error
                 };
-                TempData["Notififcation"] = JsonSerializer.Serialize(notification);
+                TempData["Notification"] = JsonSerializer.Serialize(notification);
                 return RedirectToPage("/UserFunc/UserList");
             }
             resutl = await userManager.AddClaimsAsync(user, model.ClaimList.Where(x => x.IsSelected).Select(x => new Claim(x.ClaimType, x.IsSelected.ToString())));
@@ -88,7 +88,7 @@ namespace Bloggie.Web.Pages.UserFunc
                     Message = "Bro sorry, but smth went wrong. Try it again Or Later either wrtie your problem to support.",
                     Type = NotificationType.Error
                 };
-                TempData["Notififcation"] = JsonSerializer.Serialize(notification);
+                TempData["Notification"] = JsonSerializer.Serialize(notification);
                 return RedirectToPage("/UserFunc/UserList");
             }
             else
@@ -98,7 +98,7 @@ namespace Bloggie.Web.Pages.UserFunc
                     Message = "Claims assigned successfully",
                     Type = NotificationType.Success
                 };
-                TempData["Notififcation"] = JsonSerializer.Serialize(notification);
+                TempData["Notification"] = JsonSerializer.Serialize(notification);
                 return RedirectToPage("/UserFunc/UserList");
             }
         }

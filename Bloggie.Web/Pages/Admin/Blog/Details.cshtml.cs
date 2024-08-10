@@ -65,7 +65,7 @@ namespace Bloggie.Web.Pages.Admin.Blog
             BlogModel = await blogRepository.GetAsync(urlHandle);
             model.BlogPostId = BlogModel.Id;
             var user = await userManager.GetUserAsync(User);
-            if (signInManager.IsSignedIn(User) && !string.IsNullOrWhiteSpace(model.Description))
+            if (signInManager.IsSignedIn(User) && ModelState.IsValid)
             {
                 var comment = new BlogPostCommentViewModel()
                 {

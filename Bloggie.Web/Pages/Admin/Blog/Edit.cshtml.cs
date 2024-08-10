@@ -9,6 +9,7 @@ using System.ComponentModel.DataAnnotations;
 using System;
 using System.Text.Json;
 using Microsoft.AspNetCore.Authorization;
+using DB.Model.BlogFunc;
 
 namespace Bloggie.Web.Pages.Admin.Blog
 {
@@ -18,7 +19,7 @@ namespace Bloggie.Web.Pages.Admin.Blog
         private readonly IBlogRepository blogPostRepository;
 
         [BindProperty]
-        public BlogModel BlogPost { get; set; }
+        public EditBlogPostRequest BlogPost { get; set; }
 
         [BindProperty]
         public IFormFile FeaturedImage { get; set; }
@@ -36,9 +37,9 @@ namespace Bloggie.Web.Pages.Admin.Blog
         {
             var blogPostDomainModel = await blogPostRepository.GetAsync(id);
 
-            if (blogPostDomainModel != null && blogPostDomainModel.Tags != null)
+            if (ModelState.IsValid)
             {
-                BlogPost = new BlogModel
+                BlogPost = new EditBlogPostRequest
                 {
                     Id = blogPostDomainModel.Id,
                     Heading = blogPostDomainModel.Heading,

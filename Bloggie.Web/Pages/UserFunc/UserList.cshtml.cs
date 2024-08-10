@@ -99,7 +99,7 @@ namespace Bloggie.Web.Pages.UserFunc
                 var notifications2 = new NotificationModel()
                 {
                     Message = "Smth Went Wrong Bro. Try It Again Or Later",
-                    Type = NotificationType.Success,
+                    Type = NotificationType.Error,
                 };
                 TempData["Notification"] = JsonSerializer.Serialize(notifications2);
                 return RedirectToPage("/UserFunc/UserList");
@@ -107,7 +107,7 @@ namespace Bloggie.Web.Pages.UserFunc
             var notifications3 = new NotificationModel()
             {
                 Message = "Smth Went Wrong Bro. Try It Again Or Later",
-                Type = NotificationType.Success,
+                Type = NotificationType.Error,
             };
             TempData["Notification"] = JsonSerializer.Serialize(notifications3);
             return RedirectToPage("/UserFunc/UserList");

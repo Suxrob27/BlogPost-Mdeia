@@ -14,39 +14,52 @@
         <div class="form-floating mb-3">
             <input asp-for="blogModel.Heading" type="text" class="form-control" id="exampleInputEmail1">
             <label asp-for="blogModel.Heading" class="form-label">Heading</label>
-
+            <span class="text-danger" asp-validation-for="blogModel.Heading"></span>
         </div>
         <div class="form-floating mb-3">
             <input asp-for="blogModel.PageTitle"  type="text" class="form-control" id="exampleInputEmail1">
             <label asp-for="blogModel.PageTitle" class="form-label">Page Title</label>
+             <span class="text-danger" asp-validation-for="blogModel.PageTitle"></span>
 
         </div>
         <div class="form-floating mb-3">
-            <textarea asp-for="blogModel.Content" class="form-control" style="height:100px"  id="content"></textarea>
+            <textarea asp-for="blogModel.Content" class="form-control" style="height:100px" required maxlength="1000" id="content"></textarea>
+            <span class="text-danger" asp-validation-for="blogModel.Content"></span>
+
         </div>
         <div class="form-floating mb-3">
             <input asp-for="blogModel.ShortDescription"  type="text" class="form-control" id="exampleInputEmail1">
             <label asp-for="blogModel.ShortDescription" class="form-label">Page Title</label>
+            <span class="text-danger" asp-validation-for="blogModel.ShortDescription"></span>
+
         </div>
 
         <div class="form-floating mb-3">
             <input asp-for="FeaturedFile" type="text" id="featuredImageUpload" class="form-control" type="file">
             <img src="" id="featuredImageDisplay" style="display:none; width:300px;" />
+            <span class="text-danger" asp-validation-for="blogModel.FeaturedImageUrl"></span>
+
 
         </div>
 
         <div class="form-floating mb-3">
             <input asp-for="blogModel.FeaturedImageUrl" type="text" class="form-control" >
             <label asp-for="blogModel.FeaturedImageUrl" id="featuredImageUrl" class="form-label">Featured Image Url</label>
+             <span class="text-danger" asp-validation-for="blogModel.FeaturedImageUrl"></span>
+
         </div>
         <div class="form-floating mb-3">
             <input asp-for="blogModel.UrlHandle" type="text" class="form-control" id="exampleInputEmail1">
             <label asp-for="blogModel.UrlHandle" i class="form-label">Url Handle</label>
+             <span class="text-danger" asp-validation-for="blogModel.UrlHandle"></span>
+
         </div>
 
         <div class="form-floating mb-3">
             <input asp-for="Tags" type="text" class="form-control" id="exampleInputEmail1">
             <label asp-for="Tags" i class="form-label">Tags (comma seperated)</label>
+            <span class="text-danger" asp-validation-for="Tags"></span>
+
         </div>
 
         <div class="col-12">
@@ -54,10 +67,7 @@
                 <input asp-for="blogModel.Visible" class="form-check-input" type="checkbox" id="gridCheck">
                 <label asp-for="blogModel.Visible" class="form-check-label" for="gridCheck">
                     Is Visible
-                </label>
-            </div>
-
-        <button type="submit" class="btn btn-primary m-3">Submit</button>
+                    </label></button>
     </form>
 </div>
 
@@ -98,3 +108,8 @@
 
      </script>
  }
+@section Scripto {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
