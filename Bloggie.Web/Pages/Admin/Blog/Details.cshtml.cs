@@ -11,7 +11,6 @@ using System.Security;
 
 namespace Bloggie.Web.Pages.Admin.Blog
 {
-    [Authorize()]
     public class DetailModel : PageModel
     {
 
@@ -78,6 +77,11 @@ namespace Bloggie.Web.Pages.Admin.Blog
 
             return RedirectToPage("/Admin/Blog/Details", urlHandle);
         }
+
+        //public Task<IActionResult> OnPostDeleteComment()
+        //{
+          
+        //}
 
         private async Task GetComments()
         {

@@ -11,5 +11,6 @@ namespace DB.IRepository
     {
         Task<BlogPostCommentViewModel> AddAsync(BlogPostCommentViewModel blogPostCommentView);
         Task<IEnumerable<BlogPostCommentViewModel>> GetAllAsync(Guid blogPostId);
+        BlogPostCommentViewModel Delete(BlogPostCommentViewModel blogPostCommentView);
     }
 }

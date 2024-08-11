@@ -20,13 +20,10 @@ namespace DB.Model.User
         public string Content { get; set; } = string.Empty;
         [Required]
         public string ShortDescription { get; set; } = string.Empty;
-        [Required]
         public string FeaturedImageUrl { get; set; } = string.Empty;
         [Required]
         public string UrlHandle { get; set; } = string.Empty;
-        [Required]
         public DateTime? PublishedDate { get; set; }
-        [Required]
         public string? Author { get; set; }
         [Required]
         public bool Visible { get; set; }

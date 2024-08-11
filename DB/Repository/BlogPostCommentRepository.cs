@@ -25,6 +25,13 @@ namespace DB.Repository
             return blogPostCommentView; 
         }
 
+        public  BlogPostCommentViewModel Delete(BlogPostCommentViewModel blogPostCommentView)
+        {
+            dB.blogPostComments.Remove(blogPostCommentView);  
+            dB.SaveChanges();
+            return blogPostCommentView; 
+        }
+
         public async Task<IEnumerable<BlogPostCommentViewModel>> GetAllAsync(Guid blogPostId)
         {
             return  await dB.blogPostComments.Where(x => x.BlogPostId == blogPostId).ToListAsync();

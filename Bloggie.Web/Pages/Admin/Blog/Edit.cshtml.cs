@@ -10,19 +10,19 @@ using System;
 using System.Text.Json;
 using Microsoft.AspNetCore.Authorization;
 using DB.Model.BlogFunc;
+using System.Security.Cryptography.Xml;
 
 namespace Bloggie.Web.Pages.Admin.Blog
 {
-    [Authorize(Policy = "superAdmin")]
-    public class EditModel : PageModel
+     public class EditModel : PageModel
     {
         private readonly IBlogRepository blogPostRepository;
 
         [BindProperty]
-        public EditBlogPostRequest BlogPost { get; set; }
+        public EditBlogPostRequest BlogPost { get; set; } = new EditBlogPostRequest();  
 
         [BindProperty]
-        public IFormFile FeaturedImage { get; set; }
+        public IFormFile? FeaturedImage { get; set; }
 
         [BindProperty]
         [Required]
@@ -118,7 +118,7 @@ namespace Bloggie.Web.Pages.Admin.Blog
 
                 TempData["Notification"] = JsonSerializer.Serialize(notification);
 
-                return RedirectToPage("/Admin/Blogs/List");
+                return RedirectToPage("/Admin/Blog/BlogPostList");
             }
 
             return Page();

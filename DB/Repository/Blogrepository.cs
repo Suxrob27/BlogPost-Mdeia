@@ -27,12 +27,16 @@ namespace DB.Repository
 
         public async Task<bool> DeleteAsync(Guid id)
         {
-            var exsistingElement = await db.blogModel.FindAsync(id);
-            db.blogModel.Remove(exsistingElement);
-            db.SaveChanges();
-            return true;
-
-
+            var blogPost = await db.blogModel.Include(bm => bm.Tags).FirstOrDefaultAsync(x => x.Id == id);
+            if (blogPost != null)
+            {
+                // Remove all associated tags before deleting the blog post
+                blogPost.Tags.Clear();
+                db.blogModel.Remove(blogPost);
+                await db.SaveChangesAsync();
+                return true;
+            }
+            return false;
         }
 
         public async Task<IEnumerable<BlogModel>> GetAllAsync(string tagName)

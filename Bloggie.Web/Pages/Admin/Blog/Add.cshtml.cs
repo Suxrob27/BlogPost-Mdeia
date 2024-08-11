@@ -13,7 +13,6 @@ using System.Text.Json.Serialization;
 
 namespace Bloggie.Web.Pages.Admin.NewFolder.Blog
 {
-    [Authorize(Policy = "superAdmin")]
     public class AddModel : PageModel
      {
         private readonly BlogDB _db;
@@ -23,7 +22,7 @@ namespace Bloggie.Web.Pages.Admin.NewFolder.Blog
         [BindProperty]
         public AddViewModel blogModel { get; set; }
         [BindProperty]
-        public IFormFile FeaturedFile { get; set; }
+        public IFormFile? FeaturedFile { get; set; }
 
         [BindProperty]
         public string Tags { get; set; }
@@ -41,6 +40,9 @@ namespace Bloggie.Web.Pages.Admin.NewFolder.Blog
       
         public async Task<IActionResult> OnPost() 
         {
+            var user = await _userManager.GetUserAsync(User);
+
+            blogModel.PublishedDate = DateTime.Now;
             if (ModelState.IsValid)
             {
 

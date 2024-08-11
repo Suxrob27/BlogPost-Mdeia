@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DB.Migrations
 {
     [DbContext(typeof(BlogDB))]
-    [Migration("20240807094742_qwerty")]
+    [Migration("20240811094701_qwerty")]
     partial class qwerty
     {
         /// <inheritdoc />
@@ -83,7 +83,8 @@ namespace DB.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
