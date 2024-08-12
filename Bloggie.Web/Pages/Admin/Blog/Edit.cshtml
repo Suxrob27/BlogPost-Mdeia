@@ -37,7 +37,7 @@
             </div>
         <div class="form-floating mb-3">
                 <input asp-for="BlogPost.ShortDescription" type="text" class="form-control" id="exampleInputEmail1">
-                <label asp-for="BlogPost.ShortDescription" class="form-label">Page Title</label>
+                <label asp-for="BlogPost.ShortDescription" class="form-label">Short description</label>
                 <span class="text-danger" asp-validation-for="BlogPost.ShortDescription"></span>
         </div>
 
@@ -46,6 +46,11 @@
                 <label asp-for="BlogPost.FeaturedImageUrl" class="form-label">Featured Image Url</label>
                 <span class="text-danger" asp-validation-for="BlogPost.FeaturedImageUrl"></span>
         </div>
+            <div class="form-floating mb-3">
+                <input asp-for="BlogPost.UrlHandle" type="text" class="form-control" id="exampleInputEmail1">
+                <label asp-for="BlogPost.UrlHandle" class="form-label">Url Handle</label>
+                <span class="text-danger" asp-validation-for="BlogPost.UrlHandle"></span>
+            </div>
             <div class="form-floating mb-3">
                 <input asp-for="Tags" type="text" class="form-control" id="exampleInputEmail1">
                 <label asp-for="Tags" i class="form-label">Tags (comma seperated)</label>

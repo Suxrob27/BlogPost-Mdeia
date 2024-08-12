@@ -24,8 +24,7 @@ namespace DB.Model.BlogFunc
         [Required]
         public string UrlHandle { get; set; } = string.Empty;
         [Required]
-        public DateTime? PublishedDate { get; set; }
-        [Required]
+        public DateTime PublishedDate { get; set; }
         public string? Author { get;  set; }
         [Required]
         public bool Visible { get; set; }

@@ -14,7 +14,9 @@ using System.Security.Cryptography.Xml;
 
 namespace Bloggie.Web.Pages.Admin.Blog
 {
-     public class EditModel : PageModel
+    [Authorize(Policy = "superAdmin")]
+
+    public class EditModel : PageModel
     {
         private readonly IBlogRepository blogPostRepository;
 
@@ -84,11 +86,13 @@ namespace Bloggie.Web.Pages.Admin.Blog
 
                     await blogPostRepository.UpdateAsync(blogPostDomainModel);
 
-                    ViewData["Notification"] = new NotificationModel
+                  var notification = ViewData["Notification"] = new NotificationModel
                     {
                         Type = NotificationType.Success,
                         Message = "Record updated successfully!"
                     };
+                    TempData["Notification"] = JsonSerializer.Serialize(notification);
+                    return RedirectToPage("/Admin/Blog/BlogPostList");
                 }
                 catch (Exception ex)
                 {
@@ -99,7 +103,7 @@ namespace Bloggie.Web.Pages.Admin.Blog
                     };
                 }
 
-                return Page();
+                return RedirectToPage("/Admin/Blog/BlogPostList");
             }
 
             return Page();

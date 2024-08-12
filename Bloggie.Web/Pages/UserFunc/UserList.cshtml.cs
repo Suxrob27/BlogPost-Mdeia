@@ -14,6 +14,8 @@ using System.Text.Json;
 
 namespace Bloggie.Web.Pages.UserFunc
 {
+    [Authorize(Policy = "superAdmin")]
+
     public class UserListModel : PageModel
     {
         private readonly AuthDb _dB;

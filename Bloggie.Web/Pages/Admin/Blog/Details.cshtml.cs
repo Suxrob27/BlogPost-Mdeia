@@ -11,6 +11,8 @@ using System.Security;
 
 namespace Bloggie.Web.Pages.Admin.Blog
 {
+    [Authorize(Policy = "superAdmin")]
+
     public class DetailModel : PageModel
     {
 

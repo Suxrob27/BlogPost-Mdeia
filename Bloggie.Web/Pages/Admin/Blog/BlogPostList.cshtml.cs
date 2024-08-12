@@ -11,7 +11,7 @@ using System.Text.Json.Serialization;
 
 namespace Bloggie.Web.Pages.Admin.Blog
 {
-    [AllowAnonymous]
+    [Authorize(Policy = "superAdmin")]
     public class BlogPostListModel : PageModel
     {
         private readonly BlogDB _dB;

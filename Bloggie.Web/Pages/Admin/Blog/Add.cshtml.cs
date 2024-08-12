@@ -13,6 +13,7 @@ using System.Text.Json.Serialization;
 
 namespace Bloggie.Web.Pages.Admin.NewFolder.Blog
 {
+    [Authorize(Policy = "superAdmin")]
     public class AddModel : PageModel
      {
         private readonly BlogDB _db;
