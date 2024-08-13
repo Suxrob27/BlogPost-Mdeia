@@ -4,80 +4,90 @@
 }
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
-<div class="bg-secondary">
-    <h1>Add Blog Post</h1>
+
+<div class="bg-secondary bg-opacity-10 py-2 mb-5">
+    <div class="container">
+        <h1>Add Blog Post</h1>
+    </div>
 </div>
-<div class="mx-auto p-2 text-center">
-    <partial name="_NotificationPartial">
 
-    <form method="post">
-        <div class="form-floating mb-3">
-            <input asp-for="blogModel.Heading" type="text" class="form-control" id="exampleInputEmail1">
-            <label asp-for="blogModel.Heading" class="form-label">Heading</label>
-            <span class="text-danger" asp-validation-for="blogModel.Heading"></span>
-        </div>
-        <div class="form-floating mb-3">
-            <input asp-for="blogModel.PageTitle"  type="text" class="form-control" id="exampleInputEmail1">
-            <label asp-for="blogModel.PageTitle" class="form-label">Page Title</label>
-             <span class="text-danger" asp-validation-for="blogModel.PageTitle"></span>
+<div>
+    <div class="container">
+        <form method="post">
+            <div class="mb-3">
+                <label for="heading" class="form-label">Heading</label>
+                <input type="text" required class="form-control" id="heading" asp-for="blogModel.Heading">
+                <span class="text-danger" asp-validation-for="blogModel.Heading"></span>
+            </div>
 
-        </div>
-        <div class="form-floating mb-3">
-            <textarea asp-for="blogModel.Content" class="form-control" style="height:100px" required maxlength="1000" id="content"></textarea>
-            <span class="text-danger" asp-validation-for="blogModel.Content"></span>
+            <div class="mb-3">
+                <label for="pageTitle" class="form-label">Page Title</label>
+                <input type="text" required class="form-control" id="pageTitle" asp-for="blogModel.PageTitle">
+                <span class="text-danger" asp-validation-for="blogModel.PageTitle"></span>
 
-        </div>
-        <div class="form-floating mb-3">
-            <input asp-for="blogModel.ShortDescription"  type="text" class="form-control" id="exampleInputEmail1">
-            <label asp-for="blogModel.ShortDescription" class="form-label">Page Title</label>
-            <span class="text-danger" asp-validation-for="blogModel.ShortDescription"></span>
+            </div>
 
-        </div>
+            <div class="mb-3">
+                <label for="content" class="form-label">Content</label>
+                <textarea class="form-control" required id="content" asp-for="blogModel.Content"></textarea>
+                <span class="text-danger" asp-validation-for="blogModel.Content"></span>
 
-        <div class="form-floating mb-3">
-            <input asp-for="FeaturedFile" type="text" id="featuredImageUpload" class="form-control" type="file">
-            <img src="" id="featuredImageDisplay" style="display:none; width:300px;" />
-            <span class="text-danger" asp-validation-for="blogModel.FeaturedImageUrl"></span>
+            </div>
 
+            <div class="mb-3">
+                <label for="shortDescription" class="form-label">Short Description</label>
+                <input type="text" required class="form-control" id="shortDescription" asp-for="blogModel.ShortDescription">
+                <span class="text-danger" asp-validation-for="blogModel.ShortDescription"></span>
 
-        </div>
+            </div>
 
-        <div class="form-floating mb-3">
-            <input asp-for="blogModel.FeaturedImageUrl" type="text" class="form-control" >
-            <label asp-for="blogModel.FeaturedImageUrl" id="featuredImageUrl" class="form-label">Featured Image Url</label>
-             <span class="text-danger" asp-validation-for="blogModel.FeaturedImageUrl"></span>
+            <div class="mb-3">
+                <label for="featuredImageUpload" class="form-label">Featured Image Upload</label>
+                <input type="file" id="featuredImageUpload" asp-for="FeaturedFile" />
+                <img src="" id="featuredImageDisplay" style="display:none; width:300px;" />
+            </div>
 
-        </div>
-        <div class="form-floating mb-3">
-            <input asp-for="blogModel.UrlHandle" type="text" class="form-control" id="exampleInputEmail1">
-            <label asp-for="blogModel.UrlHandle" i class="form-label">Url Handle</label>
-             <span class="text-danger" asp-validation-for="blogModel.UrlHandle"></span>
+            <div class="mb-3">
+                <label for="featuredImageUrl" class="form-label">Featured Image Url</label>
+                <input type="text" required class="form-control" id="featuredImageUrl" asp-for="blogModel.FeaturedImageUrl">
+                <span class="text-danger" asp-validation-for="blogModel.FeaturedImageUrl"></span>
 
-        </div>
+            </div>
 
-        <div class="form-floating mb-3">
-            <input asp-for="Tags" type="text" class="form-control" id="exampleInputEmail1">
-            <label asp-for="Tags" i class="form-label">Tags (comma seperated)</label>
-            <span class="text-danger" asp-validation-for="Tags"></span>
+            <div class="mb-3">
+                <label for="urlHandle" class="form-label">Url Handle</label>
+                <input type="text" required class="form-control" id="urlHandle" asp-for="blogModel.UrlHandle">
+                <span class="text-danger" asp-validation-for="blogModel.UrlHandle"></span>
 
-        </div>
+            </div>
 
-        <div class="col-12">
-            <div class="form-check text-start">
-                <input asp-for="blogModel.Visible" class="form-check-input" type="checkbox" id="gridCheck">
-                <label asp-for="blogModel.Visible" class="form-check-label" for="gridCheck">
+      
+
+            <div class="mb-3">
+                <label for="" class="form-label">Tags (comma separated)</label>
+                <input type="text" required class="form-control" id="tags" asp-for="Tags" />
+                <span class="text-danger" asp-validation-for="Tags"></span>
+            </div>
+
+            <div class="form-check mb-3">
+                <input class="form-check-input" type="checkbox" id="isVisible" asp-for="blogModel.Visible">
+                <label class="form-check-label" for="isVisible">
                     Is Visible
-                    </label>                </div>
-                <button class="btn btn-primary m-3" type="submit">Add User</button>
+                </label>
+            </div>
 
-    </form>
+            <div class="mb-3">
+                <button class="btn btn-primary" type="submit">Submit</button>
+            </div>
 
+        </form>
+    </div>
+</div>
 
- @section Scripts 
- {
-     <script>
+@section Scripts {
+    <script>
         var editor = new FroalaEditor('#content', {
-            imageUploadURL: '/api/ImageAPI'
+            imageUploadURL: '/api/ImageAPIB'
         });
 
 
@@ -107,9 +117,8 @@
         }
 
         featuredImageUploadElement.addEventListener('change', uploadFeaturedImage);
-
-     </script>
- }
+    </script>
+}
 @section Scripto {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");

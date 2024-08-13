@@ -24,7 +24,7 @@ namespace Bloggie.Web.Pages.Admin.Blog
         public EditBlogPostRequest BlogPost { get; set; } = new EditBlogPostRequest();  
 
         [BindProperty]
-        public IFormFile? FeaturedImage { get; set; }
+        public IFormFile? FeaturedFile { get; set; }
 
         [BindProperty]
         [Required]
